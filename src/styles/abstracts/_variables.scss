@@ -44,7 +44,7 @@ $badge-pill-bg: rgba($primary-dark-color, .1);
 $footer-bg: $primary-dark-color;
 // [text - variables]
 // text colors
-$text-primary-color: $primary-dark-color;
+$text-primary-color: $secondary-dark-color;
 $text-default-color: $gray-color-4;
 $text-tone-light-color: $gray-color-2;
 $text-toned-color: $gray-color-3;
@@ -53,8 +53,7 @@ $text-hover-color: $text-primary-color;
 $text-white-color: $white-color-1;
 
 // font family
-$font-family-default: 'circular-regular', sans-serif;
-$font-family-default-m: 'circular-medium', sans-serif;
+$font-family: 'spartan', sans-serif;
 $font-family-code: Consolas, Monaco, "Lucida Console", monospace;
 
 // font weights
@@ -89,6 +88,7 @@ $border-radius-1: 2px;
 $border-radius-2: 4px;
 $border-radius-3: 6px;
 $border-radius-4: 8px;
+$border-radius-5: 10px;
 
 // [action - variables]
 // hover

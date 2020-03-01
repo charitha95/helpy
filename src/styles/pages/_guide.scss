@@ -1,0 +1,51 @@
+.guide-page-wrapper {
+  height: 100vh;
+}
+
+.guide-page {
+  position: relative;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .background-drop {
+    background:rgba($primary-dark-color, 0.25);
+    border-radius: 12px;
+    .carousel {
+      &.slide {
+        padding: 18px;
+      }
+      .carousel-item {
+        min-height: 500px;
+      }
+      .carousel-caption {
+        bottom: 15px;
+        color: $text-primary-color;
+        h3 {
+          font-size: $font-s-xxlarge;
+          text-transform: uppercase;
+        }
+      }
+      .carousel-indicators {
+        li {
+          background-color: $secondary-dark-color;
+        }
+      }
+      img {
+        width: 85% !important;
+        margin: auto;
+        margin-top: 70px;
+    
+      }
+    }
+  }
+
+  .actions {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+}

@@ -22,3 +22,10 @@
     border-radius: 50px;
   }
 }
+
+.btn {
+  text-transform: uppercase;
+  font-weight: $font-w-medium;
+  border-radius: $border-radius-5;
+  padding: 12px 25px;
+}

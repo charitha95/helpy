@@ -1,7 +1,17 @@
 /**
 * @desc         common for all pages
-* @requires     variables.scss
+* @requires     null
 */
 .page-wrapper {
-    margin-top: 50px;
+  margin-top: 50px;
 }
+
+.page-padding-x {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.page-padding-y {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+

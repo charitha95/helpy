@@ -6,6 +6,7 @@
 // colors
 $theme-colors: (
   "primary": $primary-dark-color,
+  "secondary": $secondary-dark-color,
   "danger": $danger-dark-color,
   "success": $action-dark-color,
   "dark": $gray-color-3
@@ -14,7 +15,7 @@ $theme-colors: (
 // body
 $body-bg: $body-background;
 // fonts
-$font-family-sans-serif: $font-family-default;
+$font-family-sans-serif: $font-family;
 $navbar-brand-font-size: calculate-rem($font-s-medium);
 
 // border

@@ -1,6 +1,7 @@
 import React from 'react';
 import guide_1 from '../../assets/imgs/no-connection-6.png'
 import guide_2 from '../../assets/imgs/taxi-waiting.png'
+import guide_3 from '../../assets/imgs/taxi-4.png'
 import { Button, Carousel } from 'react-bootstrap';
 
 function Guide() {
@@ -20,17 +21,32 @@ function Guide() {
                 <p>we always hear your voice</p>
               </Carousel.Caption>
             </Carousel.Item>
+
             <Carousel.Item>
               <img
                 className="d-block w-100"
                 src={guide_2}
-                alt="First slide"
+                alt="second slide"
               />
               <Carousel.Caption>
                 <h3>We Think</h3>
                 <p>we will think for you, don't worry</p>
               </Carousel.Caption>
             </Carousel.Item>
+
+
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={guide_3}
+                alt="third slide"
+              />
+              <Carousel.Caption>
+                <h3>Private</h3>
+                <p>Helpy is always confidential</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+
           </Carousel>
         </div>
         <div className='actions'>

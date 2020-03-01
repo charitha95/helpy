@@ -1,0 +1,24 @@
+/**
+* @desc         button variants.
+* @requires     variables.scss
+*/
+
+.btn-cg {
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  padding: $button-default-padding;
+  border-radius: $border-radius-1;
+  &.white {
+    color: $primary-dark-color;
+    background: $white-color-1;
+    border-color: $gray-color-2;
+    &:hover {
+      border-color: $primary-dark-color;
+    }
+  }
+
+  &.round {
+    border-radius: 50px;
+  }
+}

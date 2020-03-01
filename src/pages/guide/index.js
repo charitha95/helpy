@@ -3,10 +3,11 @@ import guide_1 from '../../assets/imgs/no-connection-6.png'
 import guide_2 from '../../assets/imgs/taxi-waiting.png'
 import guide_3 from '../../assets/imgs/taxi-4.png'
 import { Button, Carousel } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Guide() {
   return (
-    <div className='page-padding-x page-padding-y guide-page-wrapper'>
+    <div className='page-padding-x page-padding-y page-wrapper'>
       <div className="guide-page">
         <h3 className='title'>Helpy</h3>
         <div className='background-drop'>
@@ -51,8 +52,12 @@ function Guide() {
           </Carousel>
         </div>
         <div className='actions'>
-          <Button variant="secondary">Get Help</Button>
-          <Button variant="secondary">Give Help</Button>
+          <Link to='/welcome'>
+            <Button variant="secondary">Get Help</Button>
+          </Link>
+          <Link to='/welcome'>
+            <Button variant="secondary">Give Help</Button>
+          </Link>
         </div>
 
       </div>

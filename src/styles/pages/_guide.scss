@@ -17,10 +17,17 @@
         padding: 18px;
       }
       .carousel-item {
-        min-height: 500px;
+        min-height: 60vh;
       }
+      .carousel-item.active, .carousel-item-next, .carousel-item-prev {
+        display: flex;
+        flex-direction: column;
+    }
       .carousel-caption {
+        position: relative;
         bottom: 15px;
+        left: 0;
+        padding: 20px 20px;
         color: $text-primary-color;
         h3 {
           font-size: $font-s-xxlarge;
@@ -35,8 +42,7 @@
       img {
         width: 85% !important;
         margin: auto;
-        margin-top: 70px;
-    
+        // margin-top: 70px;
       }
     }
   }

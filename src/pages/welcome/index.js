@@ -19,11 +19,11 @@ function Welcome() {
         </section>
 
         <section className='actions'>
-          <Link to='/welcome'>
-            <Button variant="secondary">Get Help</Button>
+          <Link to='/signin'>
+            <Button variant="secondary">Sign in</Button>
           </Link>
-          <Link to='/welcome'>
-            <Button variant="secondary">Give Help</Button>
+          <Link to='/signup'>
+            <Button variant="secondary">Sign up</Button>
           </Link>
         </section>
       </div>

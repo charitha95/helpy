@@ -9,6 +9,15 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  .title {
+    position: absolute;
+    top: 38px;
+    font-size: $font-s-xxxlarge;
+    font-family: $font-family-latino;
+  }
+
+
   .background-drop {
     background:rgba($primary-dark-color, 0.25);
     border-radius: 12px;
@@ -28,7 +37,7 @@
         bottom: 15px;
         left: 0;
         padding: 20px 20px;
-        color: $text-primary-color;
+        color: $text-default-color;
         h3 {
           font-size: $font-s-xxlarge;
           text-transform: uppercase;

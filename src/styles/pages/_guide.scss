@@ -1,4 +1,4 @@
-.guide-page-wrapper {
+.page-wrapper {
   height: 100vh;
 }
 
@@ -17,9 +17,8 @@
     font-family: $font-family-latino;
   }
 
-
   .background-drop {
-    background:rgba($primary-dark-color, 0.25);
+    background: rgba($primary-dark-color, 0.25);
     border-radius: 12px;
     .carousel {
       &.slide {
@@ -28,10 +27,12 @@
       .carousel-item {
         min-height: 60vh;
       }
-      .carousel-item.active, .carousel-item-next, .carousel-item-prev {
+      .carousel-item.active,
+      .carousel-item-next,
+      .carousel-item-prev {
         display: flex;
         flex-direction: column;
-    }
+      }
       .carousel-caption {
         position: relative;
         bottom: 15px;

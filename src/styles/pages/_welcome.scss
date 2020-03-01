@@ -1,0 +1,64 @@
+.page-wrapper {
+  height: 100vh;
+}
+
+.welcome-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .title {
+    h3 {
+      margin-top: 25px;
+      font-size: $font-s-xxlarge;
+      font-weight: $font-w-semi-bold;
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+
+  .illustration {
+    position: absolute;
+    left: 0;
+    top: 20vh;
+    z-index: 0;
+    overflow: hidden;
+    figure {
+      width: 130%;
+      img {
+        width: 100%;
+      }
+
+      &:before {
+        position: absolute;
+        content: " ";
+        background: rgba(254, 206, 47, 0.25);
+        width: 70%;
+        height: 55%;
+        z-index: -1;
+        border-radius: 12px;
+        left: 45px;
+        top: 100px;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    a {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      button {
+        width: 85%;
+        &:first-child {
+          margin-bottom: 15px;
+        }
+      }
+    }
+
+    align-items: center;
+  }
+}

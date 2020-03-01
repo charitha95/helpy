@@ -8,6 +8,7 @@ function Guide() {
   return (
     <div className='page-padding-x page-padding-y guide-page-wrapper'>
       <div className="guide-page">
+        <h3 className='title'>Helpy</h3>
         <div className='background-drop'>
           <Carousel>
             <Carousel.Item>

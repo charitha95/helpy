@@ -14,10 +14,15 @@
 
 .page-wrapper {
   height: 100vh;
+  overflow: scroll;
 }
 
 .primary-background {
   background-color: $primary-dark-color;
+}
+
+.white-background {
+  background-color: white;
 }
 
 .page-padding-x {

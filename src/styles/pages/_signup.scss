@@ -1,47 +1,44 @@
 .signup-page {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-    z-index: 2;
-  
-    figure {
-      position: absolute;
-      top: -15px;
-      z-index: -1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  z-index: 2;
+
+  figure {
+    position: absolute;
+    top: -15px;
+    z-index: -1;
+    width: 100%;
+    img {
       width: 100%;
-      img {
-        width: 100%;
-      }
-    }
-  
-    .signup-container {
-      background: white;
-      border-radius: 12px;
-      width: 100%;
-      padding: 25px 35px;
-      margin-top: 70px;
-      h3 {
-        margin: 30px 0;
-        font-size: $font-s-xlarge;
-        font-weight: $font-w-semi-bold;
-        text-transform: uppercase;
-        text-align: center;
-        padding: 0 25px;
-      }
-      button {
-          width: 100%;
-          margin: 25px 0;
-      }
-      p {
-          text-align: center;
-      }
-      span {
-          color: $primary-dark-color;
-          font-weight: $font-w-semi-bold;
-      }
     }
   }
-  
+
+  .signup-container {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    padding: 25px 35px;
+    margin-top: 70px;
+    h3 {
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0 25px;
+      margin: 30px 0;
+    }
+    button {
+      width: 100%;
+      margin: 25px 0;
+    }
+    p {
+      text-align: center;
+    }
+    span {
+      color: $primary-dark-color;
+      font-weight: $font-w-semi-bold;
+    }
+  }
+}

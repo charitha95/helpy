@@ -5,12 +5,11 @@ import Welcome from '../pages/welcome';
 import Signin from '../pages/sign-in';
 import Signup from '../pages/signup';
 import { spring, AnimatedSwitch } from 'react-router-transition';
+import Home from '../pages/home';
 // import NotFound from '../pages/404';
 
 
 function AppRoutes() {
-  // we need to map the `scale` prop we define below
-  // to the transform style property
   function mapStyles(styles) {
     return {
       opacity: styles.opacity,
@@ -18,7 +17,6 @@ function AppRoutes() {
     };
   }
 
-  // wrap the `spring` helper to use a bouncy config
   function bounce(val) {
     return spring(val, {
       stiffness: 330,
@@ -26,19 +24,15 @@ function AppRoutes() {
     });
   }
 
-  // child matches will...
   const bounceTransition = {
-    // start in a transparent, upscaled state
     atEnter: {
       opacity: 0,
       scale: 1.2,
     },
-    // leave in a transparent, downscaled state
     atLeave: {
       opacity: bounce(0),
       scale: bounce(0.8),
     },
-    // and rest at an opaque, normally-scaled state
     atActive: {
       opacity: bounce(1),
       scale: bounce(1),
@@ -59,6 +53,7 @@ function AppRoutes() {
         <Route exact path='/welcome' component={Welcome} />
         <Route exact path='/signin' component={Signin} />
         <Route exact path='/signup' component={Signup} />
+        <Route exact path='/home' component={Home} />
       </AnimatedSwitch>
 
 

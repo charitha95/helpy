@@ -9,22 +9,58 @@
 
 .switch-wrapper > div {
   position: absolute;
+  width: 100%;
 }
 
 .page-wrapper {
   height: 100vh;
+  overflow: scroll;
 }
 
 .primary-background {
   background-color: $primary-dark-color;
 }
 
+.white-background {
+  background-color: white;
+}
+
 .page-padding-x {
   padding-left: 25px;
   padding-right: 25px;
 }
+
 .page-padding-y {
   padding-top: 25px;
   padding-bottom: 25px;
 }
 
+.nav-tabs {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  border: none;
+  z-index: 2;
+  padding: 10px 0;
+  box-shadow: 0 -2px 32px rgba(0, 0, 0, 0.03), 0 -3px 12px rgba(0, 0, 0, 0.09);
+  .nav-link,
+  .nav-link.active {
+    border: none;
+    background-color: white;
+  }
+}
+
+svg {
+  width: 18px;
+  height: 18px;
+}
+.svgicons {
+  &.active {
+    fill: $secondary-dark-color;
+  }
+  fill: $gray-color-2;
+}

@@ -14,19 +14,19 @@ function Signin() {
           <h3>Sign in</h3>
           <Form>
             <Form.Group controlId="formGroupEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Label>User name</Form.Label>
+              <Form.Control type="text" placeholder="dinu perera" />
             </Form.Group>
             <Form.Group controlId="formGroupPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control type="password" placeholder="o o o o o" />
             </Form.Group>
           </Form>
           <Link to='/signup'>
             <Button variant="secondary">Sign in</Button>
           </Link>
           <p>Don't have an account?</p>
-          <span>signup</span>
+          <p><span>signup</span></p>
         </section>
       </div>
     </div>

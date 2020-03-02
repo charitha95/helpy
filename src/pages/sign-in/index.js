@@ -1,5 +1,5 @@
 import React from 'react';
-import sigin from '../../assets/imgs/taxi-sign-up.png'
+import signin from '../../assets/imgs/taxi-sign-up.png'
 import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ function Signin() {
     <div className='page-padding-x page-padding-y page-wrapper primary-background'>
       <div className='signin-page'>
         <figure>
-          <img src={sigin} alt='sigin' />
+          <img src={signin} alt='signin' />
         </figure>
         <section className='signin-container'>
           <h3>Sign in</h3>

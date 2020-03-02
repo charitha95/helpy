@@ -12,7 +12,6 @@ function Welcome() {
         </section>
 
         <section className='illustration'>
-          <div className='backdrop'></div>
           <figure>
             <img src={welcome} alt='welcome'></img>
           </figure>

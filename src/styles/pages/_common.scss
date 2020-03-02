@@ -2,6 +2,15 @@
 * @desc         common for all pages
 * @requires     null
 */
+
+.switch-wrapper {
+  position: relative;
+}
+
+.switch-wrapper > div {
+  position: absolute;
+}
+
 .page-wrapper {
   height: 100vh;
 }

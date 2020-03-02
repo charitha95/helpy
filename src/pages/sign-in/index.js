@@ -22,7 +22,7 @@ function Signin() {
               <Form.Control type="password" placeholder="o o o o o" />
             </Form.Group>
           </Form>
-          <Link to='/signup'>
+          <Link to='/home'>
             <Button variant="secondary">Sign in</Button>
           </Link>
           <p>Don't have an account?</p>

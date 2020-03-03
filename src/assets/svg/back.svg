@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fece2f;
+      }
+
+      .cls-2 {
+        fill: #0e1b42;
+      }
+    </style>
+  </defs>
+  <g id="Group_96" data-name="Group 96" transform="translate(-32 -52)">
+    <rect id="Rectangle_16" data-name="Rectangle 16" class="cls-1" width="32" height="32" rx="13" transform="translate(32 52)"/>
+    <g id="back" transform="translate(-10.113 60.999)">
+      <path id="Chevron_Right" class="cls-2" d="M54.332,8.017l6.729,6.727a.756.756,0,0,0,1.07-1.067l-6.2-6.193L62.13,1.29A.756.756,0,0,0,61.06.222L54.331,6.949A.762.762,0,0,0,54.332,8.017Z"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,95 @@
+.call-page {
+  position: relative;
+  height: 100%;
+  .header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    a, label {
+      color: $text-default-color;
+    }
+    .back-button {
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+    }
+    label {
+      margin-left: 15px;
+    }
+  }
+
+  .type-container {
+    display: flex;
+    margin-top: 80px;
+    flex-direction: column;
+
+    figure {
+      width: 100%;
+      display: flex;
+      top: -80px;
+      img {
+        width: 45%;
+        margin: auto;
+      }
+    }
+
+    .text-container {
+      margin-top: 30px;
+      width: 100%;
+      h3,
+      p {
+        text-align: center;
+      }
+      span {
+        font-weight: $font-w-semi-bold;
+      }
+    }
+  }
+
+  .counter {
+    margin-top: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .circle-ripple {
+      background-color: $primary-dark-color;
+      width: 100px;
+      height: 50px;
+      border-radius: 12px;
+      animation: ripple 1.5s linear infinite;
+      display: flex;
+      align-items: center;
+      label {
+        margin: 7px 0 0;
+        text-align: center;
+        width: 100%;
+        font-size: $font-s-small;
+        font-weight: $font-w-medium;
+      }
+    }
+
+    @keyframes ripple {
+      0% {
+        box-shadow: 0 0 0 0 rgba($primary-dark-color, 0.3),
+          0 0 0 1em rgba($primary-dark-color, 0.3),
+          0 0 0 3em rgba($primary-dark-color, 0.3),
+          0 0 0 5em rgba($primary-dark-color, 0.3);
+      }
+      100% {
+        box-shadow: 0 0 0 1em rgba($primary-dark-color, 0.3),
+          0 0 0 3em rgba($primary-dark-color, 0.3),
+          0 0 0 5em rgba($primary-dark-color, 0.3), 0 0 0 8em rgba(red, 0);
+      }
+    }
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    button {
+      width: 100%;
+    }
+  }
+}

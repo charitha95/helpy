@@ -6,6 +6,7 @@ import Signin from '../pages/sign-in';
 import Signup from '../pages/signup';
 import { spring, AnimatedSwitch } from 'react-router-transition';
 import Home from '../pages/home';
+import Call from '../pages/call';
 // import NotFound from '../pages/404';
 
 
@@ -54,6 +55,7 @@ function AppRoutes() {
         <Route exact path='/signin' component={Signin} />
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/home' component={Home} />
+        <Route exact path='/call' component={Call} />
       </AnimatedSwitch>
 
 

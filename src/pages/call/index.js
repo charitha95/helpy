@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import relationship from '../../assets/imgs/taxi-searching.png';
 import health from '../../assets/imgs/taxi-5.png';
 import career from '../../assets/imgs/taxi-teamwork-in-office.png';
@@ -13,6 +13,11 @@ import { Button } from 'react-bootstrap';
 import ReactStopwatch from 'react-stopwatch';
 
 function Call() {
+
+  useEffect(() => {
+    alert('a')
+  }, []);
+
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 

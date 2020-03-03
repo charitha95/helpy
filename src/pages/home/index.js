@@ -43,69 +43,83 @@ function Home() {
                     </Link>
                   </Col>
                   <Col>
-                    <div className='component'>
-                      <figure>
-                        <img src={health} alt='component' />
-                      </figure>
-                      <label>Health Issues</label>
-                    </div>
+                    <Link to={'/call?type=health'}>
+                      <div className='component'>
+                        <figure>
+                          <img src={health} alt='component' />
+                        </figure>
+                        <label>Health Issues</label>
+                      </div>
+                    </Link>
                   </Col>
                 </Row>
 
                 <Row>
                   <Col>
-                    <div className='component'>
-                      <figure>
-                        <img src={career} alt='component' />
-                      </figure>
-                      <label>Career</label>
-                    </div>
+                    <Link to={'/call?type=career'}>
+                      <div className='component'>
+                        <figure>
+                          <img src={career} alt='component' />
+                        </figure>
+                        <label>Career</label>
+                      </div>
+                    </Link>
                   </Col>
                   <Col>
-                    <div className='component'>
-                      <figure>
-                        <img src={family} alt='component' />
-                      </figure>
-                      <label>Family</label>
-                    </div>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
-                    <div className='component'>
-                      <figure>
-                        <img src={interpersonal} alt='component' />
-                      </figure>
-                      <label>Interpersonal</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <div className='component'>
-                      <figure>
-                        <img src={parenting} alt='component' />
-                      </figure>
-                      <label>Parenting</label>
-                    </div>
+                    <Link to={'/call?type=family'}>
+                      <div className='component'>
+                        <figure>
+                          <img src={family} alt='component' />
+                        </figure>
+                        <label>Family</label>
+                      </div>
+                    </Link>
                   </Col>
                 </Row>
 
                 <Row>
                   <Col>
-                    <div className='component'>
-                      <figure>
-                        <img src={finantial} alt='component' />
-                      </figure>
-                      <label>Finantial</label>
-                    </div>
+                    <Link to={'/call?type=interpersonal'}>
+                      <div className='component'>
+                        <figure>
+                          <img src={interpersonal} alt='component' />
+                        </figure>
+                        <label>Interpersonal</label>
+                      </div>
+                    </Link>
                   </Col>
                   <Col>
-                    <div className='component'>
-                      <figure>
-                        <img src={gender} alt='component' />
-                      </figure>
-                      <label>Gender Identity</label>
-                    </div>
+                    <Link to={'/call?type=parenting'}>
+                      <div className='component'>
+                        <figure>
+                          <img src={parenting} alt='component' />
+                        </figure>
+                        <label>Parenting</label>
+                      </div>
+                    </Link>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <Link to={'/call?type=finantial'}>
+                      <div className='component'>
+                        <figure>
+                          <img src={finantial} alt='component' />
+                        </figure>
+                        <label>Finantial</label>
+                      </div>
+                    </Link>
+                  </Col>
+                  <Col>
+                    <Link to={'/call?type=genter'}>
+                      <div className='component'>
+                        <figure>
+                          <img src={gender} alt='component' />
+                        </figure>
+                        <label>Gender Identity</label>
+                      </div>
+                    </Link>
                   </Col>
                 </Row>
 

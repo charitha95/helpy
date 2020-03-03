@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import relationship from '../../assets/imgs/taxi-searching.png';
 import health from '../../assets/imgs/taxi-5.png';
 import career from '../../assets/imgs/taxi-teamwork-in-office.png';
@@ -7,15 +7,52 @@ import interpersonal from '../../assets/imgs/taxi-coffee-break.png';
 import parenting from '../../assets/imgs/downloading-5.png';
 import finantial from '../../assets/imgs/payment-processed-4.png';
 import gender from '../../assets/imgs/taxi-no-connection.png';
-import { Link } from 'react-router-dom';
+import ReactStopwatch from 'react-stopwatch';
+import queryString from 'query-string';
+
+import { Link, withRouter } from 'react-router-dom';
 import { ReactComponent as BackIcon } from '../../assets/svg/back.svg'
 import { Button } from 'react-bootstrap';
-import ReactStopwatch from 'react-stopwatch';
 
-function Call() {
+function Call({ location }) {
+  const [data, setData] = useState({ name: 'Relationship', img: relationship })
+
+  const qString = queryString.parse(location.search);
+
+  function setPropDate() {
+    switch (qString.type) {
+      case 'relationship':
+        setData({ name: 'Relationship', img: relationship })
+        break;
+      case 'health':
+        setData({ name: 'Health', img: health })
+        break;
+      case 'career':
+        setData({ name: 'Career', img: career })
+        break;
+      case 'family':
+        setData({ name: 'Family', img: family })
+        break;
+      case 'interpersonal':
+        setData({ name: 'Interpersonal', img: interpersonal })
+        break;
+      case 'parenting':
+        setData({ name: 'Parenting', img: parenting })
+        break;
+      case 'finantial':
+        setData({ name: 'Finantial', img: finantial })
+        break;
+      case 'gender':
+        setData({ name: 'Gender', img: gender })
+        break;
+      default:
+        break;
+    }
+  }
+
 
   useEffect(() => {
-    alert('a')
+    setPropDate();
   }, []);
 
   return (
@@ -32,10 +69,10 @@ function Call() {
         </Link>
         <section className='type-container'>
           <figure>
-            <img src={relationship} alt='type' />
+            <img src={data.img} alt='type' />
           </figure>
           <div className='text-container'>
-            <h3>Relationship</h3>
+            <h3>{data.name}</h3>
             <p>you have connected with <span>shan</span></p>
           </div>
         </section>
@@ -46,20 +83,22 @@ function Call() {
               minutes={0}
               hours={0}
               onCallback={() => console.log('Finish')}
-              render={({ formatted}) => {
+              render={({ formatted }) => {
                 return (
-                <label>{formatted}</label>
+                  <label>{formatted}</label>
                 );
               }}
             />
           </div>
         </section>
         <section className='footer'>
-          <Button variant="secondary">End call</Button>
+          <Link to='/home'>
+            <Button variant="secondary">End call</Button>
+          </Link>
         </section>
       </div>
     </div>
   )
 }
 
-export default Call;
+export default withRouter(Call);

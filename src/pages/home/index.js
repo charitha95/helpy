@@ -112,7 +112,7 @@ function Home() {
                     </Link>
                   </Col>
                   <Col>
-                    <Link to={'/call?type=genter'}>
+                    <Link to={'/call?type=gender'}>
                       <div className='component'>
                         <figure>
                           <img src={gender} alt='component' />

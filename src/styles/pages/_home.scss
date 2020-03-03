@@ -5,6 +5,9 @@
 
   .components {
     padding-top: 35px;
+    a {
+      color: $text-default-color;
+    }
     .component {
       figure {
         width: 90%;

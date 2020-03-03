@@ -13,11 +13,11 @@ import { ReactComponent as HomeIcon } from '../../assets/svg/home.svg';
 import { ReactComponent as ListIcon } from '../../assets/svg/list.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
-
 
       <Tabs defaultActiveKey="home">
         <Tab eventKey="home" title={<HomeIcon />}>
@@ -33,12 +33,14 @@ function Home() {
               <Zoom cascade>
                 <Row>
                   <Col>
-                    <div className='component'>
-                      <figure>
-                        <img src={relationship} alt='component' />
-                      </figure>
-                      <label>Relationship</label>
-                    </div>
+                    <Link to={'/call?type=relationship'}>
+                      <div className='component'>
+                        <figure>
+                          <img src={relationship} alt='component' />
+                        </figure>
+                        <label>Relationship</label>
+                      </div>
+                    </Link>
                   </Col>
                   <Col>
                     <div className='component'>

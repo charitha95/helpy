@@ -10,9 +10,12 @@ import gender from '../../assets/imgs/taxi-no-connection.png';
 import { Link } from 'react-router-dom';
 import { ReactComponent as BackIcon } from '../../assets/svg/back.svg'
 import { Button } from 'react-bootstrap';
+import ReactStopwatch from 'react-stopwatch';
+
 function Call() {
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
+
       <div className='call-page'>
         <Link to='/home'>
           <section className='header'>
@@ -32,8 +35,18 @@ function Call() {
           </div>
         </section>
         <section className='counter'>
-          <div class="circle-ripple">
-            <label>00.01</label>
+          <div className="circle-ripple">
+            <ReactStopwatch
+              seconds={0}
+              minutes={0}
+              hours={0}
+              onCallback={() => console.log('Finish')}
+              render={({ formatted}) => {
+                return (
+                <label>{formatted}</label>
+                );
+              }}
+            />
           </div>
         </section>
         <section className='footer'>

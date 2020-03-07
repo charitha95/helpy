@@ -15,42 +15,45 @@ import { ReactComponent as BackIcon } from '../../assets/svg/back.svg'
 import { Button } from 'react-bootstrap';
 
 function Call({ location }) {
-  // const [data, setData] = useState({ name: 'Relationship', img: relationship })
+  const [data, setData] = useState({ name: 'Relationship', img: relationship })
 
-  // const qString = queryString.parse(location.search);
+  const qString = queryString.parse(location.search);
 
- 
+  function setPropDate() {
+    switch (qString.type) {
+      case 'relationship':
+        setData({ name: 'Relationship', img: relationship })
+        break;
+      case 'health':
+        setData({ name: 'Health', img: health })
+        break;
+      case 'career':
+        setData({ name: 'Career', img: career })
+        break;
+      case 'family':
+        setData({ name: 'Family', img: family })
+        break;
+      case 'interpersonal':
+        setData({ name: 'Interpersonal', img: interpersonal })
+        break;
+      case 'parenting':
+        setData({ name: 'Parenting', img: parenting })
+        break;
+      case 'finantial':
+        setData({ name: 'Finantial', img: finantial })
+        break;
+      case 'gender':
+        setData({ name: 'Gender', img: gender })
+        break;
+      default:
+        break;
+    }
+  }
 
-  // useEffect(() => {
-    // switch (qString.type) {
-    //   case 'relationship':
-    //     setData({ name: 'Relationship', img: relationship })
-    //     break;
-    //   case 'health':
-    //     setData({ name: 'Health', img: health })
-    //     break;
-    //   case 'career':
-    //     setData({ name: 'Career', img: career })
-    //     break;
-    //   case 'family':
-    //     setData({ name: 'Family', img: family })
-    //     break;
-    //   case 'interpersonal':
-    //     setData({ name: 'Interpersonal', img: interpersonal })
-    //     break;
-    //   case 'parenting':
-    //     setData({ name: 'Parenting', img: parenting })
-    //     break;
-    //   case 'finantial':
-    //     setData({ name: 'Finantial', img: finantial })
-    //     break;
-    //   case 'gender':
-    //     setData({ name: 'Gender', img: gender })
-    //     break;
-    //   default:
-    //     break;
-    // }
-  // }, [qString, setData]);
+
+  useEffect(() => {
+    setPropDate();
+  }, []);
 
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
@@ -66,10 +69,10 @@ function Call({ location }) {
         </Link>
         <section className='type-container'>
           <figure>
-            <img src={relationship} alt='type' />
+            <img src={data.img} alt='type' />
           </figure>
           <div className='text-container'>
-            <h3>Relationship</h3>
+            <h3>{data.name}</h3>
             <p>you have connected with <span>shan</span></p>
           </div>
         </section>

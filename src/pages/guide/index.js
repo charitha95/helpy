@@ -1,6 +1,6 @@
 import React from 'react';
 import guide_1 from '../../assets/imgs/no-connection-6.png'
-import guide_2 from '../../assets/imgs/taxi-waiting.png'
+import guide_2 from '../../assets/imgs/taxi-waiting2.png'
 import guide_3 from '../../assets/imgs/taxi-4.png'
 import { Button, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';

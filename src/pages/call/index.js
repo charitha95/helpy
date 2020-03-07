@@ -91,11 +91,11 @@ function Call({ location }) {
             />
           </div>
         </section>
-        <section className='footer'>
+        {/* <section className='footer'>
           <Link to='/home'>
             <Button variant="secondary">End call</Button>
           </Link>
-        </section>
+        </section> */}
       </div>
     </div>
   )

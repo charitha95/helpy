@@ -1,5 +1,4 @@
 .call-page {
-  position: relative;
   height: 100%;
   .header {
     display: flex;
@@ -21,7 +20,6 @@
 
   .type-container {
     display: flex;
-    margin-top: 80px;
     flex-direction: column;
 
     figure {

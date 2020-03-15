@@ -1,14 +1,15 @@
+
 import React, { useEffect, useState } from 'react';
 import relationship from '../../assets/imgs/taxi-searching.png';
-import health from '../../assets/imgs/taxi-5.png';
-import career from '../../assets/imgs/taxi-teamwork-in-office.png';
-import family from '../../assets/imgs/taxi-family.png';
-import interpersonal from '../../assets/imgs/taxi-coffee-break.png';
-import parenting from '../../assets/imgs/downloading-5.png';
-import finantial from '../../assets/imgs/payment-processed-4.png';
-import gender from '../../assets/imgs/taxi-no-connection.png';
+// import health from '../../assets/imgs/taxi-5.png';
+// import career from '../../assets/imgs/taxi-teamwork-in-office.png';
+// import family from '../../assets/imgs/taxi-family.png';
+// import interpersonal from '../../assets/imgs/taxi-coffee-break.png';
+// import parenting from '../../assets/imgs/downloading-5.png';
+// import finantial from '../../assets/imgs/payment-processed-4.png';
+// import gender from '../../assets/imgs/taxi-no-connection.png';
 import ReactStopwatch from 'react-stopwatch';
-import queryString from 'query-string';
+// import queryString from 'query-string';
 
 import { Link, withRouter } from 'react-router-dom';
 import { ReactComponent as BackIcon } from '../../assets/svg/back.svg'
@@ -36,6 +37,27 @@ const Call = ({ location }) => {
             <h3>Relationship</h3>
             <p>you have connected with <span>shan</span></p>
           </div>
+        </section>
+        <section className='counter'>
+          <div className="circle-ripple">
+            <ReactStopwatch
+              seconds={0}
+              minutes={0}
+              hours={0}
+              onCallback={() => console.log('Finish')}
+              render={({ formatted }) => {
+                return (
+                  <label>{formatted}</label>
+                );
+              }}
+            />
+          </div>
+        </section>
+
+        <section className='footer'>
+          <Link to='/home'>
+            <Button variant="secondary">End call</Button>
+          </Link>
         </section>
       </div>
     </div>

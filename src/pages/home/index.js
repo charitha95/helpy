@@ -3,7 +3,7 @@ import { ReactComponent as HomeIcon } from '../../assets/svg/home.svg';
 import { ReactComponent as ListIcon } from '../../assets/svg/list.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { Tabs, Tab } from 'react-bootstrap';
-import Category from './sections/category';
+import { Activity, Category } from './sections'
 
 function Home() {
   return (
@@ -14,7 +14,7 @@ function Home() {
           <Category />
         </Tab>
         <Tab eventKey="activity" title={<ListIcon />}>
-          <p>Activity</p>
+          <Activity />
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
           <p>Contact</p>

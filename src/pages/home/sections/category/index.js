@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 const Category = () => {
   return (
-    <div className='home-page'>
+    <div className='category-page'>
       <section className='title'>
         <h3>Hello Dinu!</h3>
         <p>How can we help you?</p>

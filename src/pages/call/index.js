@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import relationship from '../../assets/imgs/taxi-searching.png';
 import health from '../../assets/imgs/taxi-5.png';
@@ -14,7 +15,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { ReactComponent as BackIcon } from '../../assets/svg/back.svg'
 import { Button } from 'react-bootstrap';
 
-function Call({ location }) {
+const Call = ({ location }) => {
+
   const [data, setData] = useState({ name: 'Relationship', img: relationship })
 
   const qString = queryString.parse(location.search);
@@ -53,6 +55,7 @@ function Call({ location }) {
 
   useEffect(() => {
     setPropDate();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -91,6 +94,7 @@ function Call({ location }) {
             />
           </div>
         </section>
+
         <section className='footer'>
           <Link to='/home'>
             <Button variant="secondary">End call</Button>

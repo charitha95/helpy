@@ -1,11 +1,12 @@
 .call-page {
-  position: relative;
   height: 100%;
+  position: relative;
   .header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    a, label {
+    a,
+    label {
       color: $text-default-color;
     }
     .back-button {
@@ -23,24 +24,15 @@
     display: flex;
     margin-top: 80px;
     flex-direction: column;
-
     figure {
-      width: 100%;
-      display: flex;
-      top: -80px;
+      max-width: 200px;
+      margin: auto;
       img {
-        width: 45%;
-        margin: auto;
+        width: 100%;
       }
     }
-
     .text-container {
-      margin-top: 30px;
-      width: 100%;
-      h3,
-      p {
-        text-align: center;
-      }
+      text-align: center;
       span {
         font-weight: $font-w-semi-bold;
       }
@@ -68,22 +60,21 @@
         font-weight: $font-w-medium;
       }
     }
-
-    @keyframes ripple {
-      0% {
-        box-shadow: 0 0 0 0 rgba($primary-dark-color, 0.3),
-          0 0 0 1em rgba($primary-dark-color, 0.3),
-          0 0 0 3em rgba($primary-dark-color, 0.3),
-          0 0 0 5em rgba($primary-dark-color, 0.3);
-      }
-      100% {
-        box-shadow: 0 0 0 1em rgba($primary-dark-color, 0.3),
-          0 0 0 3em rgba($primary-dark-color, 0.3),
-          0 0 0 5em rgba($primary-dark-color, 0.3), 0 0 0 8em rgba(red, 0);
-      }
-    }
   }
 
+  @keyframes ripple {
+    0% {
+      box-shadow: 0 0 0 0 rgba($primary-dark-color, 0.3),
+        0 0 0 1em rgba($primary-dark-color, 0.3),
+        0 0 0 3em rgba($primary-dark-color, 0.3),
+        0 0 0 5em rgba($primary-dark-color, 0.3);
+    }
+    100% {
+      box-shadow: 0 0 0 1em rgba($primary-dark-color, 0.3),
+        0 0 0 3em rgba($primary-dark-color, 0.3),
+        0 0 0 5em rgba($primary-dark-color, 0.3), 0 0 0 8em rgba(red, 0);
+    }
+  }
   .footer {
     position: absolute;
     bottom: 0;

@@ -3,6 +3,8 @@ if you need anything override it here
 or add new */
 html {
   scroll-behavior: smooth;
+  // overflow-y: scroll; /* has to be scroll, not auto */
+  // -webkit-overflow-scrolling: touch;
 }
 figure, p, label {
   margin: 0;

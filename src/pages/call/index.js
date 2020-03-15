@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import relationship from '../../assets/imgs/taxi-searching.png';
 import health from '../../assets/imgs/taxi-5.png';
@@ -16,6 +17,47 @@ import { Button } from 'react-bootstrap';
 
 const Call = ({ location }) => {
 
+  const [data, setData] = useState({ name: 'Relationship', img: relationship })
+
+  const qString = queryString.parse(location.search);
+
+  function setPropDate() {
+    switch (qString.type) {
+      case 'relationship':
+        setData({ name: 'Relationship', img: relationship })
+        break;
+      case 'health':
+        setData({ name: 'Health', img: health })
+        break;
+      case 'career':
+        setData({ name: 'Career', img: career })
+        break;
+      case 'family':
+        setData({ name: 'Family', img: family })
+        break;
+      case 'interpersonal':
+        setData({ name: 'Interpersonal', img: interpersonal })
+        break;
+      case 'parenting':
+        setData({ name: 'Parenting', img: parenting })
+        break;
+      case 'finantial':
+        setData({ name: 'Finantial', img: finantial })
+        break;
+      case 'gender':
+        setData({ name: 'Gender', img: gender })
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  useEffect(() => {
+    setPropDate();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
@@ -30,12 +72,33 @@ const Call = ({ location }) => {
         </Link>
         <section className='type-container'>
           <figure>
-            <img src={relationship} alt='type' />
+            <img src={data.img} alt='type' />
           </figure>
           <div className='text-container'>
-            <h3>Relationship</h3>
+            <h3>{data.name}</h3>
             <p>you have connected with <span>shan</span></p>
           </div>
+        </section>
+        <section className='counter'>
+          <div className="circle-ripple">
+            <ReactStopwatch
+              seconds={0}
+              minutes={0}
+              hours={0}
+              onCallback={() => console.log('Finish')}
+              render={({ formatted }) => {
+                return (
+                  <label>{formatted}</label>
+                );
+              }}
+            />
+          </div>
+        </section>
+
+        <section className='footer'>
+          <Link to='/home'>
+            <Button variant="secondary">End call</Button>
+          </Link>
         </section>
       </div>
     </div>

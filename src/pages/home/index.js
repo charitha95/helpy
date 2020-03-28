@@ -5,10 +5,19 @@ import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Activity, Category } from './sections'
 import { signOut } from '../../helpers/auth';
+import { db, auth } from '../../services/firebase';
 
 function Home() {
   const logout = (e) => {
     e.preventDefault();
+    // const uid = auth().currentUser.uid;
+    // db.ref(`users/${uid}`).on("value", snapshot => {
+    //   let allNotes = [];
+    //   snapshot.forEach(snap => {
+    //     allNotes.push(snap.val());
+    //   });
+    //   console.log(allNotes)
+    // });
     signOut();
   }
 

@@ -1,9 +1,14 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
-const PublicRoute = ({ component: Component }) => {
+const PublicRoute = ({ component: Component, authenticated, redirectTo='home'}) => {
+  console.log(redirectTo)
   return (
-    <Route component={Component} />
+    <Route
+      render={() => authenticated === false
+        ? <Component />
+        : <Redirect to={redirectTo} />}
+    />
   )
 }
 

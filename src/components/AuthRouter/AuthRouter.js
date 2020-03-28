@@ -5,6 +5,7 @@ import Signin from '../../pages/sign-in';
 import Signup from '../../pages/signup';
 import Home from '../../pages/home';
 import Call from '../../pages/call';
+import UserNote from '../../pages/usernote';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import { Switch } from 'react-router-dom';
@@ -24,12 +25,10 @@ class AuthRouter extends Component {
   componentDidMount() {
     auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log('user logged')
         this.setState({
           authenticated: true
         })
       } else {
-        console.log('user not logged')
         this.setState({
           authenticated: false
         })
@@ -76,12 +75,13 @@ class AuthRouter extends Component {
         className="switch-wrapper"
       >
         <PublicRoute exact path='/' component={Guide} authenticated={this.state.authenticated} />
-        <PublicRoute exact path='/guide' component={Guide} authenticated={this.state.authenticated}/>
-        <PublicRoute exact path='/welcome' component={Welcome} authenticated={this.state.authenticated}/>
-        <PublicRoute exact path='/signin' component={Signin} authenticated={this.state.authenticated}/>
-        <PublicRoute exact path='/signup' component={Signup} authenticated={this.state.authenticated} redirectTo='/guide'/>
+        <PublicRoute exact path='/guide' component={Guide} authenticated={this.state.authenticated} />
+        <PublicRoute exact path='/welcome' component={Welcome} authenticated={this.state.authenticated} />
+        <PublicRoute exact path='/signin' component={Signin} authenticated={this.state.authenticated} />
+        <PublicRoute exact path='/signup' component={Signup} authenticated={this.state.authenticated} redirectTo='/user-note' />
         <PrivateRoute exact path='/home' component={Home} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/call' component={Call} authenticated={this.state.authenticated} />
+        <PrivateRoute exact path='/user-note' component={UserNote} authenticated={this.state.authenticated} />
       </AnimatedSwitch>
     </Switch >
   }

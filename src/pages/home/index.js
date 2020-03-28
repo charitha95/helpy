@@ -4,8 +4,14 @@ import { ReactComponent as ListIcon } from '../../assets/svg/list.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Activity, Category } from './sections'
+import { signOut } from '../../helpers/auth';
 
 function Home() {
+  const logout = (e) => {
+    e.preventDefault();
+    signOut();
+  }
+
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
@@ -17,7 +23,7 @@ function Home() {
           <Activity />
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
-          <p>Contact</p>
+          <button onClick={(e) => logout(e)}>log out</button>
         </Tab>
       </Tabs>
     </div>

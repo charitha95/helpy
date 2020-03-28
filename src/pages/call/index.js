@@ -85,7 +85,7 @@ const Call = ({ location }) => {
               seconds={0}
               minutes={0}
               hours={0}
-              onCallback={() => console.log('Finish')}
+              // onCallback={() => console.log('Finish')}
               render={({ formatted }) => {
                 return (
                   <label>{formatted}</label>

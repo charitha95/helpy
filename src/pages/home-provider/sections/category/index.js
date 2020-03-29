@@ -34,7 +34,7 @@ class Category extends Component {
     return <div className='category-provider-page'>
       <section className='title'>
         <h3>Hello {this.props.user.user_name}!</h3>
-        <p>there are users who need support from you right now</p>
+        <p>there are users who need support from you right now.</p>
       </section>
       <section className='components'>
         <Zoom cascade>

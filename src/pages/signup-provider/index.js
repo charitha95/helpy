@@ -11,11 +11,16 @@ class SignupProvider extends Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
-      userName: '',
-      phone: '',
-      birthDay: '',
+      user: {
+        email: '',
+        password: ''
+      },
+      userTable: {
+        userName: '',
+        phone: '',
+        birthDay: '',
+        proficiency: []
+      }
     }
   }
 
@@ -28,8 +33,7 @@ class SignupProvider extends Component {
   handleSubmit(e) {
     e.preventDefault();
     try {
-      signUp(this.state.email, this.state.password).then(res => {
-
+      signUp(this.state.user.email, this.state.user.password).then(res => {
         this.saveUserData(res.user.uid);
       })
     } catch (error) {
@@ -38,14 +42,8 @@ class SignupProvider extends Component {
   }
 
   saveUserData(uid) {
-    const { firstName, lastName, userName, phone, birthDay } = this.state;
-    db.ref(`users/${uid}`).set({
-      first_name: firstName,
-      last_name: lastName,
-      display_name: userName,
-      phone,
-      birth_day: birthDay
-    }).then(res => {
+    const newUser= this.state.userTable;
+    db.ref(`users/${uid}`).set(newUser).then(res => {
       console.log(res);
     });
   }
@@ -86,6 +84,10 @@ class SignupProvider extends Component {
               </Form.Group>
               <Form.Group controlId="formGroupBday">
                 <Form.Label>Birthday</Form.Label>
+                <Form.Control name='birthDay' type="text" placeholder="1994-02-05" onChange={(e) => this.handlechange(e)} />
+              </Form.Group>
+              <Form.Group controlId="formGroupBday">
+                <Form.Label>Language(s) spoken</Form.Label>
                 <Form.Control name='birthDay' type="text" placeholder="1994-02-05" onChange={(e) => this.handlechange(e)} />
               </Form.Group>
               <Button variant="secondary" type='submit' >Sign up</Button>

@@ -23,6 +23,22 @@
     width: 100%;
     padding: 25px 35px;
     margin-top: 70px;
+    .custom-control {
+      margin-top: 10px;
+      margin-left: 10px;
+      padding-bottom: 5px;
+      padding-top: 5px;
+      label {
+        text-transform: capitalize;
+        margin: 0;
+        &::before {
+          top: 0 !important;
+        }
+        &::after {
+          top: 0 !important;
+        }
+      }
+    }
     h3 {
       text-transform: uppercase;
       text-align: center;

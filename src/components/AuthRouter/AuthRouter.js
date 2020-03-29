@@ -13,6 +13,7 @@ import { spring, AnimatedSwitch } from 'react-router-transition';
 
 import { auth } from '../../services/firebase'
 import EmergencyContacts from '../../pages/emergency-contacts';
+import SignupProvider from '../../pages/signup-provider';
 
 class AuthRouter extends Component {
 
@@ -80,6 +81,7 @@ class AuthRouter extends Component {
         <PublicRoute exact path='/welcome' component={Welcome} authenticated={this.state.authenticated} />
         <PublicRoute exact path='/signin' component={Signin} authenticated={this.state.authenticated} />
         <PublicRoute exact path='/signup' component={Signup} authenticated={this.state.authenticated} redirectTo='/user-note' />
+        <PublicRoute exact path='/signup-provider' component={SignupProvider} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/home' component={Home} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/call' component={Call} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/user-note' component={UserNote} authenticated={this.state.authenticated} />

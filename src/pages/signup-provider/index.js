@@ -19,15 +19,25 @@ class SignupProvider extends Component {
         userName: '',
         phone: '',
         birthDay: '',
-        proficiency: []
+        proficiency: ['relationship', 'health', 'career']
       }
     }
   }
 
-  handlechange(e) {
+  handleChangeUser(e) {
+    const user = { ...this.state.user }
+    user[e.target.name] = e.target.value
     this.setState({
-      [e.target.name]: e.target.value
-    })
+      user: user
+    });
+  }
+
+  handleChange(e) {
+    const userTable = { ...this.state.userTable }
+    userTable[e.target.name] = e.target.value
+    this.setState({
+      userTable: userTable
+    });
   }
 
   handleSubmit(e) {
@@ -42,8 +52,12 @@ class SignupProvider extends Component {
   }
 
   saveUserData(uid) {
-    const newUser= this.state.userTable;
-    db.ref(`users/${uid}`).set(newUser).then(res => {
+    db.ref(`listeners/${uid}`).set({
+      user_name: this.state.userTable.userName,
+      birth_day: this.state.userTable.birthDay,
+      mobile: this.state.userTable.phone,
+      proficiency: this.state.userTable.proficiency
+    }).then(res => {
       console.log(res);
     });
   }
@@ -60,35 +74,50 @@ class SignupProvider extends Component {
             <Form autoComplete='off' onSubmit={(e) => this.handleSubmit(e)} >
               <Form.Group controlId="formGroupEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control name='email' type="email" placeholder="dinu@email.com" onChange={(e) => this.handlechange(e)} />
+                <Form.Control name='email' type="email" placeholder="dinu@email.com" onChange={e => this.handleChangeUser(e)} />
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control name='password' type="password" placeholder="o o o o o" onChange={(e) => this.handlechange(e)} />
-              </Form.Group>
-              <Form.Group controlId="formGroupFname">
-                <Form.Label>First name</Form.Label>
-                <Form.Control name='firstName' type="text" placeholder="dinu perera" onChange={(e) => this.handlechange(e)} />
-              </Form.Group>
-              <Form.Group controlId="formGroupLname">
-                <Form.Label>Last name</Form.Label>
-                <Form.Control name='lastName' type="text" placeholder="dinu perera" onChange={(e) => this.handlechange(e)} />
+                <Form.Control name='password' type="password" placeholder="o o o o o" onChange={e => this.handleChangeUser(e)} />
               </Form.Group>
               <Form.Group controlId="formGroupDname">
                 <Form.Label>Display name</Form.Label>
-                <Form.Control name='userName' type="text" placeholder="dinu perera" onChange={(e) => this.handlechange(e)} />
+                <Form.Control name='userName' type="text" placeholder="dinu perera" onChange={(e) => this.handleChange(e)} />
               </Form.Group>
               <Form.Group controlId="formGroupPhone">
                 <Form.Label>Phone</Form.Label>
-                <Form.Control name='phone' type="number" placeholder="773592055" onChange={(e) => this.handlechange(e)} />
+                <Form.Control name='phone' type="number" placeholder="773592055" onChange={(e) => this.handleChange(e)} />
               </Form.Group>
               <Form.Group controlId="formGroupBday">
                 <Form.Label>Birthday</Form.Label>
-                <Form.Control name='birthDay' type="text" placeholder="1994-02-05" onChange={(e) => this.handlechange(e)} />
+                <Form.Control name='birthDay' type="text" placeholder="1994-02-05" onChange={(e) => this.handleChange(e)} />
               </Form.Group>
               <Form.Group controlId="formGroupBday">
                 <Form.Label>Language(s) spoken</Form.Label>
-                <Form.Control name='birthDay' type="text" placeholder="1994-02-05" onChange={(e) => this.handlechange(e)} />
+                <Form.Check
+                  custom
+                  type="checkbox"
+                  label='Sinhala'
+                  name="languages"
+                  id={`id_s`}
+                  value='Sinhala'
+                />
+                <Form.Check
+                  custom
+                  type="checkbox"
+                  label='English'
+                  name="languagee"
+                  id={`id_e`}
+                  value='English'
+                />
+                <Form.Check
+                  custom
+                  type="checkbox"
+                  label='Tamil'
+                  name="languaget"
+                  id={`id_t`}
+                  value='Tamil'
+                />
               </Form.Group>
               <Button variant="secondary" type='submit' >Sign up</Button>
             </Form>

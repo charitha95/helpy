@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { ReactComponent as HomeIcon } from '../../assets/svg/home.svg';
 import { ReactComponent as ListIcon } from '../../assets/svg/list.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
@@ -8,16 +8,14 @@ import { signOut } from '../../helpers/auth';
 import { db, auth } from '../../services/firebase';
 
 function Home() {
+  const [userName, setUserName] = useState('')
+
+  useEffect(() => {
+    db.ref(`users/${auth().currentUser.uid}/display_name`).on("value", username => setUserName(username.val()));
+  }, []);
+
   const logout = (e) => {
     e.preventDefault();
-    // const uid = auth().currentUser.uid;
-    // db.ref(`users/${uid}`).on("value", snapshot => {
-    //   let allNotes = [];
-    //   snapshot.forEach(snap => {
-    //     allNotes.push(snap.val());
-    //   });
-    //   console.log(allNotes)
-    // });
     signOut();
   }
 
@@ -26,7 +24,7 @@ function Home() {
 
       <Tabs defaultActiveKey="home">
         <Tab eventKey="home" title={<HomeIcon />}>
-          <Category />
+          <Category userName={userName} />
         </Tab>
         <Tab eventKey="activity" title={<ListIcon />}>
           <Activity />

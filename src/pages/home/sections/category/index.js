@@ -11,11 +11,11 @@ import Zoom from 'react-reveal/Zoom';
 import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const Category = () => {
+const Category = ({ userName }) => {
   return (
     <div className='category-page'>
       <section className='title'>
-        <h3>Hello Dinu!</h3>
+        <h3>Hello {userName}!</h3>
         <p>How can we help you?</p>
       </section>
       <section className='components'>

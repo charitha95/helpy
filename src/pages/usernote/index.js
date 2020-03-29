@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import signin from '../../assets/imgs/taxi-sign-up.png'
 import { Form, Button } from 'react-bootstrap';
 import { db, auth } from '../../services/firebase';
+import { withRouter } from 'react-router-dom';
 
 class UserNote extends Component {
 
@@ -22,7 +23,7 @@ class UserNote extends Component {
     e.preventDefault();
     const uid = auth().currentUser.uid;
     db.ref(`users/${uid}/user_note`).set(this.state.userNote).then(() => {
-      
+      this.props.history.push('/emergency-contact');
     });
   }
 
@@ -51,4 +52,4 @@ class UserNote extends Component {
   }
 }
 
-export default UserNote;
+export default withRouter(UserNote);

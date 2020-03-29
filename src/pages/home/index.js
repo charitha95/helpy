@@ -5,22 +5,17 @@ import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Activity, Category } from './sections'
 import { signOut } from '../../helpers/auth';
-import { db, auth } from '../../services/firebase';
+import { withRouter } from 'react-router-dom';
 
-function Home() {
+function Home({history}) {
   const logout = (e) => {
     e.preventDefault();
-    // const uid = auth().currentUser.uid;
-    // db.ref(`users/${uid}`).on("value", snapshot => {
-    //   let allNotes = [];
-    //   snapshot.forEach(snap => {
-    //     allNotes.push(snap.val());
-    //   });
-    //   console.log(allNotes)
-    // });
     signOut();
   }
 
+  const goTo = (val) => {
+    history.push(val)
+  }
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
@@ -33,10 +28,11 @@ function Home() {
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
           <button onClick={(e) => logout(e)}>log out</button>
+          <button onClick={(e) => goTo('/emergency-contact')}>go to emergancy</button>
         </Tab>
       </Tabs>
     </div>
   )
 }
 
-export default Home;
+export default withRouter(Home);

@@ -21,19 +21,9 @@ class UserNote extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const uid = auth().currentUser.uid;
-    const user = {};
-    db.ref(`users/${uid}`).on("value", snapshot => {
-      snapshot.forEach(snap => {
-        user[snap.key] = snap.val()
-      });
-      db.ref(`users/${uid}`).set({
-        user_note: this.state.userNote,
-        ...user
-      }).then(res => {
-        console.log(res);
-      });
+    db.ref(`users/${uid}/user_note`).set(this.state.userNote).then(() => {
+      
     });
-
   }
 
 

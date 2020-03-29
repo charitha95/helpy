@@ -98,7 +98,7 @@ const Call = ({ location }) => {
         </section>
 
         <section className='footer'>
-          <Link to='/home'>
+          <Link to={isProvider ? '/home-provider' : '/home'}>
             <Button variant="secondary">End call</Button>
           </Link>
         </section>

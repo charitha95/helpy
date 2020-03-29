@@ -9,7 +9,7 @@ import finantial from '../../../../assets/imgs/payment-processed-4.png';
 import gender from '../../../../assets/imgs/taxi-no-connection.png';
 import Zoom from 'react-reveal/Zoom';
 import { Row, Col } from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { db, auth } from '../../../../services/firebase';
 
 class Category extends Component {
@@ -34,7 +34,7 @@ class Category extends Component {
   handleClick(value) {
     this.openCallConnection(value).then(() => {
       this.updateRequests(value).then(() => {
-        // this.props.history.push(`/call?type=${value}`);
+        this.props.history.push(`/call?type=${value}`);
       });
     })
   }
@@ -83,83 +83,69 @@ class Category extends Component {
               </div>
             </Col>
             <Col>
-              <Link to={'/call?type=health'}>
-                <div className='component'>
-                  <figure>
-                    <img src={health} alt='component' />
-                  </figure>
-                  <label>Health Issues</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('health')}>
+                <figure>
+                  <img src={health} alt='component' />
+                </figure>
+                <label>Health Issues</label>
+              </div>
             </Col>
           </Row>
 
           <Row>
             <Col>
-              <Link to={'/call?type=career'}>
-                <div className='component'>
-                  <figure>
-                    <img src={career} alt='component' />
-                  </figure>
-                  <label>Career</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('career')}>
+                <figure>
+                  <img src={career} alt='component' />
+                </figure>
+                <label>Career</label>
+              </div>
             </Col>
             <Col>
-              <Link to={'/call?type=family'}>
-                <div className='component'>
-                  <figure>
-                    <img src={family} alt='component' />
-                  </figure>
-                  <label>Family</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('family')}>
+                <figure>
+                  <img src={family} alt='component' />
+                </figure>
+                <label>Family</label>
+              </div>
             </Col>
           </Row>
 
           <Row>
             <Col>
-              <Link to={'/call?type=interpersonal'}>
-                <div className='component'>
-                  <figure>
-                    <img src={interpersonal} alt='component' />
-                  </figure>
-                  <label>Interpersonal</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('interpersonal')}>
+                <figure>
+                  <img src={interpersonal} alt='component' />
+                </figure>
+                <label>Interpersonal</label>
+              </div>
             </Col>
             <Col>
-              <Link to={'/call?type=parenting'}>
-                <div className='component'>
-                  <figure>
-                    <img src={parenting} alt='component' />
-                  </figure>
-                  <label>Parenting</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('parenting')}>
+                <figure>
+                  <img src={parenting} alt='component' />
+                </figure>
+                <label>Parenting</label>
+              </div>
             </Col>
           </Row>
 
           <Row>
             <Col>
-              <Link to={'/call?type=finantial'}>
-                <div className='component'>
-                  <figure>
-                    <img src={finantial} alt='component' />
-                  </figure>
-                  <label>Finantial</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('finantial')}>
+                <figure>
+                  <img src={finantial} alt='component' />
+                </figure>
+                <label>Finantial</label>
+              </div>
             </Col>
             <Col>
-              <Link to={'/call?type=gender'}>
-                <div className='component'>
-                  <figure>
-                    <img src={gender} alt='component' />
-                  </figure>
-                  <label>Gender Identity</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('relationship')}>
+                <figure>
+                  <img src={gender} alt='component' />
+                </figure>
+                <label>Gender Identity</label>
+              </div>
             </Col>
           </Row>
 

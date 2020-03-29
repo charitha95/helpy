@@ -12,6 +12,7 @@ import { Switch } from 'react-router-dom';
 import { spring, AnimatedSwitch } from 'react-router-transition';
 
 import { auth } from '../../services/firebase'
+import EmergencyContacts from '../../pages/emergency-contacts';
 
 class AuthRouter extends Component {
 
@@ -22,8 +23,8 @@ class AuthRouter extends Component {
     }
   }
 
-  componentDidMount() {
-    auth().onAuthStateChanged((user) => {
+  async componentWillMount() {
+    await auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           authenticated: true
@@ -82,6 +83,7 @@ class AuthRouter extends Component {
         <PrivateRoute exact path='/home' component={Home} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/call' component={Call} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/user-note' component={UserNote} authenticated={this.state.authenticated} />
+        <PrivateRoute exact path='/emergency-contact' component={EmergencyContacts} authenticated={this.state.authenticated} />
       </AnimatedSwitch>
     </Switch >
   }

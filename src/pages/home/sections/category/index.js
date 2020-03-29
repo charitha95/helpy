@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import relationship from '../../../../assets/imgs/taxi-searching.png';
 import health from '../../../../assets/imgs/taxi-5.png';
 import career from '../../../../assets/imgs/taxi-teamwork-in-office.png';
@@ -9,27 +9,78 @@ import finantial from '../../../../assets/imgs/payment-processed-4.png';
 import gender from '../../../../assets/imgs/taxi-no-connection.png';
 import Zoom from 'react-reveal/Zoom';
 import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { db, auth } from '../../../../services/firebase';
 
-const Category = ({ userName }) => {
-  return (
-    <div className='category-page'>
+class Category extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      requests: {}
+    }
+  }
+
+  componentDidMount() {
+    db.ref("requests").on("value", snapshot => {
+      const reqs = {};
+      snapshot.forEach(snap => { reqs[snap.key] = Number(snap.val()) });
+      this.setState({
+        requests: reqs
+      })
+    });
+  }
+
+  handleClick(value) {
+    this.openCallConnection(value).then(() => {
+      this.updateRequests(value).then(() => {
+        // this.props.history.push(`/call?type=${value}`);
+      });
+    })
+  }
+
+  async openCallConnection(value) {
+    const availableCalls = await this.getAvailableCalls(value);
+    availableCalls.push({
+      user_id: auth().currentUser.uid,
+      provider_id: ''
+    })
+    return db.ref(`calls/${value}/available`).set(
+      availableCalls
+    )
+  }
+
+  getAvailableCalls(value) {
+    let list = []
+    db.ref(`calls/${value}/available`).on("value", snapshot => {
+      list = snapshot.val()
+    });
+    return list;
+  }
+
+  updateRequests(value) {
+    const reqs = { ...this.state.requests }
+    const currentOpennings = reqs[value];
+    return db.ref(`requests/${value}`).set(currentOpennings + 1)
+  }
+
+
+  render() {
+    return <div className='category-page'>
       <section className='title'>
-        <h3>Hello {userName}!</h3>
+        <h3>Hello {this.props.user.display_name}!</h3>
         <p>How can we help you?</p>
       </section>
       <section className='components'>
         <Zoom cascade>
           <Row>
             <Col>
-              <Link to={'/call?type=relationship'}>
-                <div className='component'>
-                  <figure>
-                    <img src={relationship} alt='component' />
-                  </figure>
-                  <label>Relationship</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('relationship')}>
+                <figure>
+                  <img src={relationship} alt='component' />
+                </figure>
+                <label>Relationship</label>
+              </div>
             </Col>
             <Col>
               <Link to={'/call?type=health'}>
@@ -116,7 +167,7 @@ const Category = ({ userName }) => {
 
       </section>
     </div>
-  )
+  }
 }
 
-export default Category;
+export default withRouter(Category);

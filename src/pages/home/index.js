@@ -9,11 +9,15 @@ import { withRouter } from 'react-router-dom';
 import { auth, db } from '../../services/firebase';
 
 function Home({ history }) {
-  const [userName, setUserName] = useState('');
-  localStorage.setItem('isProvider', false)
+
+  const [user, setUser] = useState('');
+
+  localStorage.setItem('isProvider', false);
+
   useEffect(() => {
-    db.ref(`users/${auth().currentUser.uid}/display_name`).on('value',
-      snap => setUserName(snap.val()))
+    // get all users
+    db.ref(`users/${auth().currentUser.uid}`).on('value',
+      snap => setUser(snap.val()));
   }, []);
 
   const logout = (e) => {
@@ -35,7 +39,7 @@ function Home({ history }) {
 
       <Tabs defaultActiveKey="home">
         <Tab eventKey="home" title={<HomeIcon />}>
-          <Category userName={userName} />
+          <Category user={user} />
         </Tab>
         <Tab eventKey="activity" title={<ListIcon />}>
           <Activity />

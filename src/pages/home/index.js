@@ -1,22 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { ReactComponent as HomeIcon } from '../../assets/svg/home.svg';
 import { ReactComponent as ListIcon } from '../../assets/svg/list.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Activity, Category } from './sections'
 import { signOut } from '../../helpers/auth';
-import { db, auth } from '../../services/firebase';
+import { withRouter } from 'react-router-dom';
+import { auth, db } from '../../services/firebase';
 
-function Home() {
-  const [userName, setUserName] = useState('')
+function Home({ history }) {
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    db.ref(`users/${auth().currentUser.uid}/display_name`).on("value", username => setUserName(username.val()));
+    db.ref(`users/${auth().currentUser.uid}/display_name`).on('value',
+      snap => setUserName(snap.val()))
   }, []);
-
+  
   const logout = (e) => {
     e.preventDefault();
     signOut();
+  }
+
+  const goTo = (val) => {
+    history.push(val)
+  }
+
+  const loadUser = () => {
+    console.log(auth().currentUser)
+
   }
 
   return (
@@ -31,10 +42,12 @@ function Home() {
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
           <button onClick={(e) => logout(e)}>log out</button>
+          <button onClick={() => goTo('/emergency-contact')}>go to emergancy</button>
+          <button onClick={() => loadUser()}>load user</button>
         </Tab>
       </Tabs>
     </div>
   )
 }
 
-export default Home;
+export default withRouter(Home);

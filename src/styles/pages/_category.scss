@@ -28,3 +28,34 @@
     }
   }
 }
+
+.category-provider-page {
+  .title {
+    margin-top: 25px;
+  }
+
+  .components {
+    padding-top: 35px;
+    a {
+      color: $text-default-color;
+    }
+    .component {
+      figure {
+        width: 90%;
+        margin: auto;
+        img {
+          width: 100%;
+        }
+      }
+      label {
+        text-align: center;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 0;
+      }
+    }
+    .row {
+      margin-bottom: 35px;
+    }
+  }
+}

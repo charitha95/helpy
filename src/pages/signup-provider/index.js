@@ -70,7 +70,7 @@ class SignupProvider extends Component {
             <img src={signup} alt='signup' />
           </figure>
           <section className='signup-container'>
-            <h3>Sign up</h3>
+            <h3>Sign up</h3><span>(provider)</span>
             <Form autoComplete='off' onSubmit={(e) => this.handleSubmit(e)} >
               <Form.Group controlId="formGroupEmail">
                 <Form.Label>Email</Form.Label>
@@ -124,7 +124,7 @@ class SignupProvider extends Component {
 
             <p>Already a user?</p>
             <p>
-              <Link to='/signin'>
+              <Link to='/signin-provider'>
                 <span>signin</span>
               </Link>
             </p>

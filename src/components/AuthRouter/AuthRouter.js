@@ -14,6 +14,8 @@ import { spring, AnimatedSwitch } from 'react-router-transition';
 import { auth } from '../../services/firebase'
 import EmergencyContacts from '../../pages/emergency-contacts';
 import SignupProvider from '../../pages/signup-provider';
+import HomeProvider from '../../pages/home-provider';
+import SigninProvider from '../../pages/sign-in-provider';
 
 class AuthRouter extends Component {
 
@@ -80,12 +82,15 @@ class AuthRouter extends Component {
         <PublicRoute exact path='/guide' component={Guide} authenticated={this.state.authenticated} />
         <PublicRoute exact path='/welcome' component={Welcome} authenticated={this.state.authenticated} />
         <PublicRoute exact path='/signin' component={Signin} authenticated={this.state.authenticated} />
+        <PublicRoute exact path='/signin-provider' component={SigninProvider} authenticated={this.state.authenticated} redirectTo='/home-provider'/>
         <PublicRoute exact path='/signup' component={Signup} authenticated={this.state.authenticated} redirectTo='/user-note' />
-        <PublicRoute exact path='/signup-provider' component={SignupProvider} authenticated={this.state.authenticated} />
+        <PublicRoute exact path='/signup-provider' component={SignupProvider} authenticated={this.state.authenticated} redirectTo='/home-provider'/>
         <PrivateRoute exact path='/home' component={Home} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/call' component={Call} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/user-note' component={UserNote} authenticated={this.state.authenticated} />
         <PrivateRoute exact path='/emergency-contact' component={EmergencyContacts} authenticated={this.state.authenticated} />
+        <PrivateRoute exact path='/home-provider' component={HomeProvider} authenticated={this.state.authenticated} />
+
       </AnimatedSwitch>
     </Switch >
   }

@@ -18,6 +18,7 @@ import { Button } from 'react-bootstrap';
 const Call = ({ location }) => {
 
   const [data, setData] = useState({ name: 'Relationship', img: relationship })
+  const [isProvider, setProvider] = useState(false)
 
   const qString = queryString.parse(location.search);
 
@@ -54,6 +55,7 @@ const Call = ({ location }) => {
 
 
   useEffect(() => {
+    setProvider(localStorage.getItem('isProvider') === 'true');
     setPropDate();
     // eslint-disable-next-line
   }, []);
@@ -62,7 +64,7 @@ const Call = ({ location }) => {
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
       <div className='call-page'>
-        <Link to='/home'>
+        <Link to={isProvider ? '/home-provider' : '/home'}>
           <section className='header'>
             <div className='back-button'>
               <BackIcon />

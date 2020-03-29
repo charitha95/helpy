@@ -10,12 +10,12 @@ import { auth, db } from '../../services/firebase';
 
 function Home({ history }) {
   const [userName, setUserName] = useState('');
-
+  localStorage.setItem('isProvider', false)
   useEffect(() => {
     db.ref(`users/${auth().currentUser.uid}/display_name`).on('value',
       snap => setUserName(snap.val()))
   }, []);
-  
+
   const logout = (e) => {
     e.preventDefault();
     signOut();

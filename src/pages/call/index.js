@@ -14,14 +14,20 @@ import queryString from 'query-string';
 import { Link, withRouter } from 'react-router-dom';
 import { ReactComponent as BackIcon } from '../../assets/svg/back.svg'
 import { Button } from 'react-bootstrap';
-import { db } from '../../services/firebase';
+import { db, auth } from '../../services/firebase';
+import RatingModal from './sections/rating';
 
-const Call = ({ location }) => {
+const Call = ({ location, history }) => {
 
   const [data, setData] = useState({ name: 'Relationship', img: relationship })
   const [isProvider, setProvider] = useState(false)
   const [selectedCall, setSelectedCall] = useState({});
+  const [show, setShow] = useState(false);
 
+  const handleModal = () => setShow(!show);
+  const rateHandler = (e) => {
+    console.log(e)
+  }
   const qString = queryString.parse(location.search);
 
   function setPropData() {
@@ -56,12 +62,9 @@ const Call = ({ location }) => {
   }
 
   function getAvailableCalls() {
-    let list = []
-    db.ref(`calls/${qString.type}/available`).on("value", snapshot => {
-      list = snapshot.val()
-      setSelectedCall(list[0]);
+    db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
+      setSelectedCall(snapshot.val());
     });
-    return list;
   }
 
   useEffect(() => {
@@ -71,24 +74,47 @@ const Call = ({ location }) => {
     // eslint-disable-next-line
   }, []);
 
-  function callEndHandler () {
+  function callEndHandler() {
+    handleModal();
 
-  }
+    // if (isProvider) {
+    //   //adds to the completed and remove from open
+    //   db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
+    //     // get completed calls list
+    //     db.ref(`calls/${qString.type}/completed`).once("value", compSnapshot => {
 
-  async function clloseCallConnection() {
-    const availableCalls = await this.getAvailableCalls(qString.type);
-    
-    availableCalls.push({
-      user_id: selectedCall.user_id,
-      provider_id: selectedCall.provider_id,
-    })
-    return db.ref(`calls/${qString.type}/available`).set(
-      availableCalls
-    )
+    //       let completedCalls = compSnapshot.val();
+
+    //       // check for the first time
+    //       if (!completedCalls) {
+    //         completedCalls = [];
+    //       }
+
+    //       //push new call connection
+    //       completedCalls.unshift({
+    //         user_id: selectedCall.user_id,
+    //         provider_id: auth().currentUser.uid
+    //       });
+
+    //       //save with new connection
+    //       db.ref(`calls/${qString.type}/completed`).set(completedCalls);
+
+    //       //remove from available
+    //       snapshot.ref.remove();
+
+         
+    //     });
+    //   });
+    // }
+
+    // history.push(`/home-provider`);
+
   }
 
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
+     
+     <RatingModal show={show} handleModal={handleModal} rateHandler={rateHandler}/>
 
       <div className='call-page'>
         <Link to={isProvider ? '/home-provider' : '/home'}>
@@ -96,7 +122,7 @@ const Call = ({ location }) => {
             <div className='back-button'>
               <BackIcon />
             </div>
-            <label>Call </label>{selectedCall && selectedCall.user_id}
+            <label>Call </label>
           </section>
         </Link>
         <section className='type-container'>
@@ -125,9 +151,9 @@ const Call = ({ location }) => {
         </section>
 
         <section className='footer'>
-          <Link to={isProvider ? '/home-provider' : '/home'}>
-            <Button variant="secondary" onClick={callEndHandler}>End call</Button>
-          </Link>
+          {/* <Link to={isProvider ? '/home-provider' : '/home'}> */}
+          <Button variant="secondary" onClick={callEndHandler}>End call</Button>
+          {/* </Link> */}
         </section>
       </div>
     </div>

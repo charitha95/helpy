@@ -36,8 +36,7 @@ class Category extends Component {
   }
 
   async openCallConnection(value) {
-    // let callsArray = await db.ref(`calls/${value}/available`).on("value", snapshot => snapshot.val());
-    //get available calls
+    //get available calls and update with new connection
     db.ref(`calls/${value}/available`).once("value", snapshot => {
       let availableCalls = snapshot.val();
 
@@ -47,10 +46,11 @@ class Category extends Component {
       }
 
       //push new call connection
-      availableCalls.push({
+      availableCalls.unshift({
         user_id: auth().currentUser.uid,
         provider_id: ''
       });
+
       //save with new connection
       db.ref(`calls/${value}/available`).set(availableCalls);
 
@@ -59,23 +59,13 @@ class Category extends Component {
         this.props.history.push(`/call?type=${value}`);
       });
     });
-    // console.log(callsArray);
   }
-
-  // getAvailableCalls(value) {
-  //   let list = []
-  //   db.ref(`calls/${value}/available`).on("value", snapshot => {
-  //     list = snapshot.val()
-  //   });
-  //   return list;
-  // }
 
   updateRequests(value) {
     const reqs = { ...this.state.requests }
     const currentOpennings = reqs[value];
     return db.ref(`requests/${value}`).set(currentOpennings + 1)
   }
-
 
   render() {
     return <div className='category-page'>

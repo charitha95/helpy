@@ -1,0 +1,15 @@
+.rating-modal {
+  .modal-body,
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-body {
+    flex-direction: column;
+    p {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  }
+}

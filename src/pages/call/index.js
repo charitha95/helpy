@@ -8,7 +8,7 @@ import interpersonal from '../../assets/imgs/taxi-coffee-break.png';
 import parenting from '../../assets/imgs/downloading-5.png';
 import finantial from '../../assets/imgs/payment-processed-4.png';
 import gender from '../../assets/imgs/taxi-no-connection.png';
-import ReactStopwatch from 'react-stopwatch';
+// import ReactStopwatch from 'react-stopwatch';
 import queryString from 'query-string';
 
 import { Link, withRouter } from 'react-router-dom';
@@ -24,13 +24,13 @@ const Call = ({ location, history }) => {
   const [selectedCall, setSelectedCall] = useState({});
   const [show, setShow] = useState(false);
 
-  const handleModal = () => setShow(!show);
-
   const qString = queryString.parse(location.search);
 
   (() => {
-    db.ref(`calls/${qString.type}/completed`).on("value", snapshot => {
-      console.log('call triggered, is pro:'+ isProvider)
+    db.ref(`calls/${qString.type}/available/0`).on("value", snapshot => {
+      if (snapshot && snapshot.val()) {
+
+      }
     });
   })();
 
@@ -41,6 +41,8 @@ const Call = ({ location, history }) => {
     // eslint-disable-next-line
   }, []);
 
+  const handleModal = () => setShow(!show);
+
   function getAndUpdateAvailableCalls() {
     db.ref(`calls/${qString.type}/available/0`).on("value", async snapshot => {
       if (localStorage.getItem('isProvider') === 'true') {
@@ -48,12 +50,10 @@ const Call = ({ location, history }) => {
           user_id: snapshot.val().user_id,
           provider_id: auth().currentUser.uid,
           isStarted: true,
-          isEnded: false
+          isEnded: snapshot.val().isEnded
         });
       }
       setSelectedCall(snapshot.val());
-      // update call
-
     });
 
   }
@@ -89,47 +89,32 @@ const Call = ({ location, history }) => {
     }
   }
 
-
   function onSubmit(val) {
     setShow(!show);
     console.log(val)
   }
 
   function callEndHandler() {
+    // db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
+    //   snapshot.ref.remove();
+    // });
+
     db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-      snapshot.ref.remove();
-    });
-    handleModal();
-
-    if (false) {
-      //adds to the completed and remove from open
-      db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-        // get completed calls list
-        db.ref(`calls/${qString.type}/completed`).once("value", compSnapshot => {
-
-          let completedCalls = compSnapshot.val();
-
-          // check for the first time
-          if (!completedCalls) {
-            completedCalls = [];
-          }
-
-          //push new call connection
-          completedCalls.unshift({
-            user_id: selectedCall.user_id,
-            provider_id: auth().currentUser.uid
-          });
-
-          //save with new connection
-          db.ref(`calls/${qString.type}/completed`).set(completedCalls);
-
-          //remove from available
-          snapshot.ref.remove();
-
-
-        });
+      const newCall = {
+        user_id: snapshot.val().user_id,
+        provider_id: snapshot.val().provider_id,
+        isStarted: true,
+        isEnded: true
+      }
+      db.ref(`calls/${qString.type}/available/0`).set({ ...newCall }).then(() => {
+        setSelectedCall({ ...newCall });
       });
-    }
+    });
+
+    // db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
+    //   snapshot.ref.remove();
+    // });
+
 
     // history.push(`/home-provider`);
 
@@ -155,34 +140,35 @@ const Call = ({ location, history }) => {
           </figure>
           <div className='text-container'>
             <h3>{data.name}</h3>
-            <p>you have connected with <span>shan</span></p>
-          </div>
-        </section>
-        <section className='counter' style={{ display: show ? 'none' : 'flex' }}>
-          <div className="circle-ripple">
-            {selectedCall &&
-              selectedCall.isStarted ?
-              <ReactStopwatch
-                seconds={0}
-                minutes={0}
-                hours={0}
-                // onCallback={() => console.log('Finish')}
-                render={({ formatted }) => {
-                  return (
-                    <label>{formatted}</label>
-                  );
-                }}
-              />
-              :
-              <p>Connecting</p>
+            {
+              selectedCall &&
+                selectedCall.isEnded ? <p>Call is over! </p> :
+                !selectedCall.isStarted ? <p>connecting to a  {isProvider ? 'user.' : 'provider.'} </p> : <p>Connected to a {isProvider ? 'user.' : 'provider.'}</p>
             }
 
           </div>
         </section>
+        <section className='counter' style={{ display: selectedCall.isEnded || !selectedCall.isStarted ? 'none' : 'flex' }}>
+          <div className="circle-ripple">
+            <p>0:001</p>
+          </div>
+        </section>
+
+        {selectedCall.isEnded &&
+          <div className='duration'>
+            <p>Call duration:<span> 05:02 minutes</span></p>
+          </div>
+        }
+
+
+
 
         <section className='footer'>
           {/* <Link to={isProvider ? '/home-provider' : '/home'}> */}
-          <Button variant="secondary" onClick={callEndHandler}>End call</Button>
+          {!selectedCall.isEnded ?
+            <Button variant="secondary" onClick={callEndHandler}>End call</Button> :
+            <Button variant="secondary" onClick={handleModal}>Rate call</Button>
+          }
           {/* </Link> */}
         </section>
       </div>

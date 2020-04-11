@@ -26,14 +26,6 @@ const Call = ({ location, history }) => {
 
   const qString = queryString.parse(location.search);
 
-  (() => {
-    db.ref(`calls/${qString.type}/available/0`).on("value", snapshot => {
-      if (snapshot && snapshot.val()) {
-
-      }
-    });
-  })();
-
   useEffect(() => {
     setProvider(localStorage.getItem('isProvider') === 'true');
     getAndUpdateAvailableCalls();
@@ -50,7 +42,10 @@ const Call = ({ location, history }) => {
           user_id: snapshot.val().user_id,
           provider_id: auth().currentUser.uid,
           isStarted: true,
-          isEnded: snapshot.val().isEnded
+          isEnded: snapshot.val().isEnded,
+          provider_rating: snapshot.val().provider_rating || '',
+          provider_note: snapshot.val().provider_note || '',
+          user_rating: snapshot.val().user_rating || ''
         });
       }
       setSelectedCall(snapshot.val());
@@ -91,7 +86,19 @@ const Call = ({ location, history }) => {
 
   function onSubmit(val) {
     setShow(!show);
-    console.log(val)
+    const callMeta = { ...selectedCall };
+    let route = '';
+    if (isProvider) {
+      callMeta.provider_rating = val.rating;
+      callMeta.provider_note = val.note
+      route = '/home-provider'
+    } else {
+      callMeta.user_rating = val.rating;
+      route = '/home'
+    }
+    db.ref(`calls/${qString.type}/available/0`).set({ ...callMeta }).then(() => {
+      history.push(route);
+    });
   }
 
   function callEndHandler() {
@@ -104,7 +111,10 @@ const Call = ({ location, history }) => {
         user_id: snapshot.val().user_id,
         provider_id: snapshot.val().provider_id,
         isStarted: true,
-        isEnded: true
+        isEnded: true,
+        provider_rating: snapshot.val().provider_rating || '',
+        provider_note: snapshot.val().provider_note || '',
+        user_rating: snapshot.val().user_rating || ''
       }
       db.ref(`calls/${qString.type}/available/0`).set({ ...newCall }).then(() => {
         setSelectedCall({ ...newCall });

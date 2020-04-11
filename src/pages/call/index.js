@@ -24,11 +24,18 @@ const Call = ({ location, history }) => {
   const [selectedCall, setSelectedCall] = useState({});
   const [show, setShow] = useState(false);
 
+
   const handleModal = () => setShow(!show);
-  const rateHandler = (e) => {
-    console.log(e)
-  }
+
   const qString = queryString.parse(location.search);
+
+  useEffect(() => {
+    setProvider(localStorage.getItem('isProvider') === 'true');
+    getAvailableCalls();
+    setPropData();
+    // eslint-disable-next-line
+  }, []);
+
 
   function setPropData() {
     switch (qString.type) {
@@ -67,45 +74,43 @@ const Call = ({ location, history }) => {
     });
   }
 
-  useEffect(() => {
-    setProvider(localStorage.getItem('isProvider') === 'true');
-    getAvailableCalls();
-    setPropData();
-    // eslint-disable-next-line
-  }, []);
+  function onSubmit(val) {
+    setShow(!show);
+    console.log(val)
+  }
 
   function callEndHandler() {
     handleModal();
 
-    // if (isProvider) {
-    //   //adds to the completed and remove from open
-    //   db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-    //     // get completed calls list
-    //     db.ref(`calls/${qString.type}/completed`).once("value", compSnapshot => {
+    if (false) {
+      //adds to the completed and remove from open
+      db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
+        // get completed calls list
+        db.ref(`calls/${qString.type}/completed`).once("value", compSnapshot => {
 
-    //       let completedCalls = compSnapshot.val();
+          let completedCalls = compSnapshot.val();
 
-    //       // check for the first time
-    //       if (!completedCalls) {
-    //         completedCalls = [];
-    //       }
+          // check for the first time
+          if (!completedCalls) {
+            completedCalls = [];
+          }
 
-    //       //push new call connection
-    //       completedCalls.unshift({
-    //         user_id: selectedCall.user_id,
-    //         provider_id: auth().currentUser.uid
-    //       });
+          //push new call connection
+          completedCalls.unshift({
+            user_id: selectedCall.user_id,
+            provider_id: auth().currentUser.uid
+          });
 
-    //       //save with new connection
-    //       db.ref(`calls/${qString.type}/completed`).set(completedCalls);
+          //save with new connection
+          db.ref(`calls/${qString.type}/completed`).set(completedCalls);
 
-    //       //remove from available
-    //       snapshot.ref.remove();
+          //remove from available
+          snapshot.ref.remove();
 
-         
-    //     });
-    //   });
-    // }
+
+        });
+      });
+    }
 
     // history.push(`/home-provider`);
 
@@ -113,8 +118,8 @@ const Call = ({ location, history }) => {
 
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
-     
-     <RatingModal show={show} handleModal={handleModal} rateHandler={rateHandler}/>
+
+      <RatingModal show={show} handleModal={handleModal} onSubmit={onSubmit} isProvider={isProvider} />
 
       <div className='call-page'>
         <Link to={isProvider ? '/home-provider' : '/home'}>
@@ -134,7 +139,7 @@ const Call = ({ location, history }) => {
             <p>you have connected with <span>shan</span></p>
           </div>
         </section>
-        <section className='counter'>
+        <section className='counter' style={{ display: show ? 'none' : 'flex' }}>
           <div className="circle-ripple">
             <ReactStopwatch
               seconds={0}

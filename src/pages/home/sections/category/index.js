@@ -48,7 +48,9 @@ class Category extends Component {
       //push new call connection
       availableCalls.unshift({
         user_id: auth().currentUser.uid,
-        provider_id: ''
+        provider_id: '',
+        isStarted: false,
+        isEnded: false
       });
 
       //save with new connection

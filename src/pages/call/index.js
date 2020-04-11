@@ -24,18 +24,39 @@ const Call = ({ location, history }) => {
   const [selectedCall, setSelectedCall] = useState({});
   const [show, setShow] = useState(false);
 
-
   const handleModal = () => setShow(!show);
 
   const qString = queryString.parse(location.search);
 
+  (() => {
+    db.ref(`calls/${qString.type}/completed`).on("value", snapshot => {
+      console.log('call triggered, is pro:'+ isProvider)
+    });
+  })();
+
   useEffect(() => {
     setProvider(localStorage.getItem('isProvider') === 'true');
-    getAvailableCalls();
+    getAndUpdateAvailableCalls();
     setPropData();
     // eslint-disable-next-line
   }, []);
 
+  function getAndUpdateAvailableCalls() {
+    db.ref(`calls/${qString.type}/available/0`).on("value", async snapshot => {
+      if (localStorage.getItem('isProvider') === 'true') {
+        await db.ref(`calls/${qString.type}/available/0`).set({
+          user_id: snapshot.val().user_id,
+          provider_id: auth().currentUser.uid,
+          isStarted: true,
+          isEnded: false
+        });
+      }
+      setSelectedCall(snapshot.val());
+      // update call
+
+    });
+
+  }
 
   function setPropData() {
     switch (qString.type) {
@@ -68,11 +89,6 @@ const Call = ({ location, history }) => {
     }
   }
 
-  function getAvailableCalls() {
-    db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-      setSelectedCall(snapshot.val());
-    });
-  }
 
   function onSubmit(val) {
     setShow(!show);
@@ -80,6 +96,9 @@ const Call = ({ location, history }) => {
   }
 
   function callEndHandler() {
+    db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
+      snapshot.ref.remove();
+    });
     handleModal();
 
     if (false) {
@@ -141,17 +160,23 @@ const Call = ({ location, history }) => {
         </section>
         <section className='counter' style={{ display: show ? 'none' : 'flex' }}>
           <div className="circle-ripple">
-            <ReactStopwatch
-              seconds={0}
-              minutes={0}
-              hours={0}
-              // onCallback={() => console.log('Finish')}
-              render={({ formatted }) => {
-                return (
-                  <label>{formatted}</label>
-                );
-              }}
-            />
+            {selectedCall &&
+              selectedCall.isStarted ?
+              <ReactStopwatch
+                seconds={0}
+                minutes={0}
+                hours={0}
+                // onCallback={() => console.log('Finish')}
+                render={({ formatted }) => {
+                  return (
+                    <label>{formatted}</label>
+                  );
+                }}
+              />
+              :
+              <p>Connecting</p>
+            }
+
           </div>
         </section>
 

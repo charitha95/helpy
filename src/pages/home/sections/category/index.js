@@ -32,31 +32,43 @@ class Category extends Component {
   }
 
   handleClick(value) {
-    this.openCallConnection(value).then(() => {
-      this.updateRequests(value).then(() => {
-        this.props.history.push(`/call?type=${value}`);
-      });
-    })
+    this.openCallConnection(value);
   }
 
   async openCallConnection(value) {
-    const availableCalls = await this.getAvailableCalls(value);
-    availableCalls.push({
-      user_id: auth().currentUser.uid,
-      provider_id: ''
-    })
-    return db.ref(`calls/${value}/available`).set(
-      availableCalls
-    )
+    // let callsArray = await db.ref(`calls/${value}/available`).on("value", snapshot => snapshot.val());
+    //get available calls
+    db.ref(`calls/${value}/available`).once("value", snapshot => {
+      let availableCalls = snapshot.val();
+
+      // check for the first time
+      if (!availableCalls) {
+        availableCalls = [];
+      }
+
+      //push new call connection
+      availableCalls.push({
+        user_id: auth().currentUser.uid,
+        provider_id: ''
+      });
+      //save with new connection
+      db.ref(`calls/${value}/available`).set(availableCalls);
+
+      //update requests list
+      this.updateRequests(value).then(() => {
+        this.props.history.push(`/call?type=${value}`);
+      });
+    });
+    // console.log(callsArray);
   }
 
-  getAvailableCalls(value) {
-    let list = []
-    db.ref(`calls/${value}/available`).on("value", snapshot => {
-      list = snapshot.val()
-    });
-    return list;
-  }
+  // getAvailableCalls(value) {
+  //   let list = []
+  //   db.ref(`calls/${value}/available`).on("value", snapshot => {
+  //     list = snapshot.val()
+  //   });
+  //   return list;
+  // }
 
   updateRequests(value) {
     const reqs = { ...this.state.requests }

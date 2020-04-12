@@ -50,9 +50,9 @@ function Home({ history }) {
           <Activity user={user}/>
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
-          <button onClick={(e) => logout(e)}>log out</button>
+          {/* <button onClick={(e) => logout(e)}>log out</button>
           <button onClick={() => goTo('/emergency-contact')}>go to emergancy</button>
-          <button onClick={() => loadUser()}>load user</button>
+          <button onClick={() => loadUser()}>load user</button> */}
         </Tab>
       </Tabs>
     </div>

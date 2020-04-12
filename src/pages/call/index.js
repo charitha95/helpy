@@ -98,15 +98,33 @@ const Call = ({ location, history }) => {
       db.ref(`requests/${qString.type}`).once("value", snapshot => {
         db.ref(`requests/${qString.type}`).set(snapshot.val() - 1);
       });
+      updateUserCalls(callMeta, `users/${callMeta.user_id}/calls/`)
     } else {
       callMeta.user_rating = val.rating;
-      route = '/home'
+      route = '/home';
     }
-
 
 
     db.ref(`calls/${qString.type}/available/0`).set({ ...callMeta }).then(() => {
       history.push(route);
+    });
+  }
+
+  function updateUserCalls(call, path) {
+    debugger
+    return db.ref(path).once("value", snapshot => {
+      let calls = snapshot.val();
+
+      // check for the first time
+      if (!calls) {
+        calls = [];
+      }
+
+      //push new ended call connection to user/provider
+      calls.unshift({ ...call });
+
+      //save with new connection
+      return db.ref(path).set(calls);
     });
   }
 

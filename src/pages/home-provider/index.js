@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ReactComponent as HomeIcon } from '../../assets/svg/home.svg';
-import { ReactComponent as ListIcon } from '../../assets/svg/list.svg';
+import { ReactComponent as ListIcon } from '../../assets/svg/conv.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Activity, Category } from './sections'

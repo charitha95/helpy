@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { ReactComponent as HomeIcon } from '../../assets/svg/home.svg';
-import { ReactComponent as ListIcon } from '../../assets/svg/list.svg';
+import { ReactComponent as ListIcon } from '../../assets/svg/conv.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
+import { ReactComponent as FeedIcon } from '../../assets/svg/feed.svg';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Activity, Category } from './sections'
 import { signOut } from '../../helpers/auth';
 import { withRouter } from 'react-router-dom';
 import { auth, db } from '../../services/firebase';
+import Feed from './sections/feed';
 
 function Home({ history }) {
 
@@ -43,6 +45,9 @@ function Home({ history }) {
         </Tab>
         <Tab eventKey="activity" title={<ListIcon />}>
           <Activity user={user}/>
+        </Tab>
+        <Tab eventKey="feed" title={<FeedIcon />}>
+          <Feed user={user}/>
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
           <button onClick={(e) => logout(e)}>log out</button>

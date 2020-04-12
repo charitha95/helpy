@@ -43,11 +43,11 @@ function Home({ history }) {
         <Tab eventKey="home" title={<HomeIcon />}>
           <Category user={user} />
         </Tab>
-        <Tab eventKey="activity" title={<ListIcon />}>
-          <Activity user={user}/>
-        </Tab>
         <Tab eventKey="feed" title={<FeedIcon />}>
           <Feed user={user}/>
+        </Tab>
+        <Tab eventKey="activity" title={<ListIcon />}>
+          <Activity user={user}/>
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
           <button onClick={(e) => logout(e)}>log out</button>

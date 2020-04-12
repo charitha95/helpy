@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ReactComponent as HomeIcon } from '../../assets/svg/home.svg';
-import { ReactComponent as ListIcon } from '../../assets/svg/conv.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { Tabs, Tab } from 'react-bootstrap';
-import { Activity, Category } from './sections'
+import { Category } from './sections'
 import { signOut } from '../../helpers/auth';
 import { withRouter } from 'react-router-dom';
 import { auth, db } from '../../services/firebase';
@@ -40,9 +39,9 @@ function HomeProvider({ history }) {
         <Tab eventKey="home" title={<HomeIcon />}>
           <Category user={user} />
         </Tab>
-        <Tab eventKey="activity" title={<ListIcon />}>
+        {/* <Tab eventKey="activity" title={<ListIcon />}>
           <Activity />
-        </Tab>
+        </Tab> */}
         <Tab eventKey="contact" title={<UserIcon />}>
           <button onClick={(e) => logout(e)}>log out</button>
           <button onClick={() => goTo('/emergency-contact')}>go to emergancy</button>

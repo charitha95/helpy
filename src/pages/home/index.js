@@ -8,6 +8,7 @@ import { Activity, Category } from './sections'
 import { withRouter } from 'react-router-dom';
 import { auth, db } from '../../services/firebase';
 import Feed from './sections/feed';
+import { signOut } from '../../helpers/auth';
 
 function Home({ history }) {
 

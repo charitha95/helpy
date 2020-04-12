@@ -23,6 +23,9 @@ const Call = ({ location, history }) => {
   const [isProvider, setProvider] = useState(false)
   const [selectedCall, setSelectedCall] = useState({});
   const [show, setShow] = useState(false);
+  const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+  const current_datetime = new Date();
+  const formatted_date = current_datetime.getDate() + "-" + months[current_datetime.getMonth()] + "-" + current_datetime.getFullYear();
 
   const qString = queryString.parse(location.search);
 
@@ -45,7 +48,11 @@ const Call = ({ location, history }) => {
           isEnded: snapshot.val().isEnded,
           provider_rating: snapshot.val().provider_rating || '',
           provider_note: snapshot.val().provider_note || '',
-          user_rating: snapshot.val().user_rating || ''
+          user_rating: snapshot.val().user_rating || '',
+          duration: snapshot.val().duration || '',
+          time: snapshot.val().time || '',
+          type: qString.type || '',
+          date: formatted_date || '',
         });
       }
       setSelectedCall(snapshot.val());
@@ -88,34 +95,33 @@ const Call = ({ location, history }) => {
     setShow(!show);
     const callMeta = { ...selectedCall };
     let route = '';
+
     if (isProvider) {
       callMeta.provider_rating = val.rating;
       callMeta.provider_note = val.note
-      route = '/home-provider'
+      route = '/home-provider';
+      db.ref(`requests/${qString.type}`).once("value", snapshot => {
+        db.ref(`requests/${qString.type}`).set(snapshot.val() - 1);
+      });
     } else {
       callMeta.user_rating = val.rating;
       route = '/home'
     }
+
+
     db.ref(`calls/${qString.type}/available/0`).set({ ...callMeta }).then(() => {
       history.push(route);
     });
   }
 
   function callEndHandler() {
-    // db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-    //   snapshot.ref.remove();
-    // });
-
     db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-      const newCall = {
-        user_id: snapshot.val().user_id,
-        provider_id: snapshot.val().provider_id,
-        isStarted: true,
-        isEnded: true,
-        provider_rating: snapshot.val().provider_rating || '',
-        provider_note: snapshot.val().provider_note || '',
-        user_rating: snapshot.val().user_rating || ''
-      }
+      const newCall = { ...selectedCall };
+      newCall.duration = '';
+      const h = (current_datetime.getHours() < 10 ? '0' : '') + current_datetime.getHours(),
+        m = (current_datetime.getMinutes() < 10 ? '0' : '') + current_datetime.getMinutes();
+      newCall.time = `${h}:${m}`
+      newCall.isEnded = true
       db.ref(`calls/${qString.type}/available/0`).set({ ...newCall }).then(() => {
         setSelectedCall({ ...newCall });
       });

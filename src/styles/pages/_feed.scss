@@ -18,7 +18,10 @@
     }
   }
   .user-uploads {
-    margin-top: 50px;
+    margin-top: 35px;
+    .col-6 {
+        margin-bottom: 15px;
+    }
     .image-wrapper {
       border-radius: 10px;
       overflow: hidden;

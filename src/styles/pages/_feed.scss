@@ -1,4 +1,8 @@
 .feed-page {
+    h4 {
+        font-size: 18px !important;
+        margin-bottom: 15px;
+    }
   .carousel {
     border-radius: 10px;
     overflow: hidden;
@@ -14,7 +18,7 @@
     }
   }
   .user-uploads {
-    margin-top: 25px;
+    margin-top: 50px;
     .image-wrapper {
       border-radius: 10px;
       overflow: hidden;

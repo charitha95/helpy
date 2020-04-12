@@ -45,9 +45,9 @@ class Feed extends Component {
     return (
       <div className='feed-page'>
         <div className='carousel-wrapper'>
-          <h3>Featured</h3>
+          <h4>Featured</h4>
           <section className='carousel'>
-            <Carousel interval={null}>
+            <Carousel interval={3000}>
               {this.state.featured && this.state.featured.map((img, index) =>
                 <Carousel.Item key={index}>
                   <img
@@ -61,6 +61,7 @@ class Feed extends Component {
           </section>
         </div>
         <div className='user-uploads'>
+        <h4>Community uploads</h4>
           <Row>
             {this.state.userUploaded && this.state.userUploaded.map((img, index) =>
               <Col xs={6} key={index}>

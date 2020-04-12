@@ -5,10 +5,10 @@ import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
 import { ReactComponent as FeedIcon } from '../../assets/svg/feed.svg';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Activity, Category } from './sections'
-import { signOut } from '../../helpers/auth';
 import { withRouter } from 'react-router-dom';
 import { auth, db } from '../../services/firebase';
 import Feed from './sections/feed';
+import { signOut } from '../../helpers/auth';
 
 function Home({ history }) {
 
@@ -27,15 +27,6 @@ function Home({ history }) {
     signOut();
   }
 
-  const goTo = (val) => {
-    history.push(val)
-  }
-
-  const loadUser = () => {
-    console.log(auth().currentUser)
-
-  }
-
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
@@ -50,9 +41,7 @@ function Home({ history }) {
           <Activity user={user}/>
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
-          {/* <button onClick={(e) => logout(e)}>log out</button>
-          <button onClick={() => goTo('/emergency-contact')}>go to emergancy</button>
-          <button onClick={() => loadUser()}>load user</button> */}
+          <button onClick={(e) => logout(e)}>log out</button>
         </Tab>
       </Tabs>
     </div>

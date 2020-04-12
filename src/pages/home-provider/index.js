@@ -23,15 +23,6 @@ function HomeProvider({ history }) {
     signOut();
   }
 
-  const goTo = (val) => {
-    history.push(val)
-  }
-
-  const loadUser = () => {
-    console.log(auth().currentUser)
-
-  }
-
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
@@ -44,8 +35,6 @@ function HomeProvider({ history }) {
         </Tab> */}
         <Tab eventKey="contact" title={<UserIcon />}>
           <button onClick={(e) => logout(e)}>log out</button>
-          <button onClick={() => goTo('/emergency-contact')}>go to emergancy</button>
-          <button onClick={() => loadUser()}>load user</button>
         </Tab>
       </Tabs>
     </div>

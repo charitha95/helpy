@@ -158,7 +158,7 @@ const Call = ({ location, history }) => {
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
-      <RatingModal show={show} handleModal={handleModal} onSubmit={onSubmit} isProvider={isProvider} />
+      <RatingModal show={show} handleModal={handleModal} onSubmit={onSubmit} isProvider={isProvider} userId={selectedCall ? selectedCall.user_id : ''} />
 
       <div className='call-page'>
         <Link to={isProvider ? '/home-provider' : '/home'}>
@@ -189,8 +189,8 @@ const Call = ({ location, history }) => {
               &&
               <Timer>
                 <Timer.Hours />:
-              <Timer.Minutes />:
-              <Timer.Seconds />
+                <Timer.Minutes />:
+                <Timer.Seconds />
               </Timer>
             }
 

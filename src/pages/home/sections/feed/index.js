@@ -66,7 +66,7 @@ class Feed extends Component {
             {this.state.userUploaded && this.state.userUploaded.map((img, index) =>
               <Col xs={6} key={index}>
                 <div className='image-wrapper'>
-                  <img src={img} />
+                  <img src={img} alt='feed'/>
                 </div>
               </Col>
             )}
@@ -75,7 +75,7 @@ class Feed extends Component {
         </div>
         <div className='input-wrapper'>
           <Upload />
-          <input type="file" accept="image/*" capture="camera" id="cameraInput" onChange={(e) => this.changeHandler(e)} />
+          <input type="file" accept="image/*" id="cameraInput" onChange={(e) => this.changeHandler(e)} />
         </div>
       </div >
     )

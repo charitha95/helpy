@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons'
-function RatingModal({ show, handleModal, onSubmit, isProvider }) {
+import { db } from '../../../services/firebase';
+function RatingModal({ show, handleModal, onSubmit, isProvider, userId }) {
 
   const [rating, setRating] = useState(0);
   const [note, setNote] = useState('');
-
-
+  const [eShow, setEShow] = useState(false);
+  const [contacts, setContacts] = useState([])
+  function handleEModal() {
+    setEShow(!eShow)
+  }
   function rateHandler(val) {
     setRating(val)
   }
@@ -17,7 +21,16 @@ function RatingModal({ show, handleModal, onSubmit, isProvider }) {
     setNote(e.target.value)
   }
 
-  return (
+  useEffect(() => {
+    if (userId) {
+      db.ref(`users/${userId}/emergancy_contact`).once("value", snapshot => {
+        console.log(snapshot.val());
+        setContacts(snapshot.val());
+      });
+    }
+  }, [userId]);
+
+  return (<>
     <Modal show={show} onHide={handleModal} centered className='rating-modal'>
       <Modal.Header closeButton>
         <Modal.Title>Rate Receiver</Modal.Title>
@@ -44,11 +57,31 @@ function RatingModal({ show, handleModal, onSubmit, isProvider }) {
         {/* <Button variant="secondary" onClick={handleModal}>
           Close
       </Button> */}
+        {isProvider &&
+          <Button variant="primary" className='critical' onClick={handleEModal}>
+            Critical
+          </Button>
+        }
         <Button variant="primary" onClick={onSubmit.bind(null, { rating: rating, note: note })}>
           Submit
       </Button>
       </Modal.Footer>
     </Modal>
+
+
+    {/* emergency contact modal */}
+    <Modal show={eShow} onHide={handleEModal} centered backdropClassName='emodal-backdrop' className='emergancy-modal'>
+      <Modal.Header closeButton>
+        <Modal.Title>Emergancy Contacts</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {contacts && contacts.map((contact, index) => {
+          return <a key={index} href={`tel:${contact.phone}`}>Call {contact.relationship}</a>
+        })}
+      </Modal.Body>
+    </Modal>
+
+  </>
   )
 }
 

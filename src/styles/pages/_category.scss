@@ -28,3 +28,66 @@
     }
   }
 }
+
+.category-provider-page {
+  .title {
+    margin-top: 25px;
+    p {
+      margin-top: 25px;
+    }
+  }
+
+  .components {
+    padding-top: 35px;
+    .help-component {
+      display: flex;
+      padding: 15px;
+      box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+        0 1px 3px 1px rgba(60, 64, 67, 0.15);
+      border-radius: 8px;
+
+      &.not-active {
+        background: #bdbdbd;
+      }
+    }
+    a {
+      color: $text-default-color;
+    }
+    .component {
+      margin-bottom: 20px;
+      figure {
+        width: 65%;
+        img {
+          width: 100%;
+        }
+      }
+
+      .illustration {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .count {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        h2 {
+          margin-top: 20px;
+        }
+        button {
+          white-space: nowrap;
+          padding: 10px 15px;
+        }
+      }
+      label {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 0;
+      }
+    }
+    .row {
+      margin-bottom: 35px;
+    }
+  }
+}

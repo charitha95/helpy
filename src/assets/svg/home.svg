@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="69" height="69" viewBox="0 0 69 69">
-  <g id="Group_97" data-name="Group 97" transform="translate(-927 -859)">
-    <circle id="Ellipse_26" data-name="Ellipse 26" class="svgicons" cx="9.5" cy="9.5" r="9.5" transform="translate(927 859)"/>
-    <circle id="Ellipse_27" data-name="Ellipse 27" class="svgicons" cx="9.5" cy="9.5" r="9.5" transform="translate(977 859)"/>
-    <circle id="Ellipse_28" data-name="Ellipse 28" class="svgicons" cx="9.5" cy="9.5" r="9.5" transform="translate(977 909)"/>
-    <circle id="Ellipse_29" data-name="Ellipse 29" class="svgicons" cx="9.5" cy="9.5" r="9.5" transform="translate(927 909)"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <g id="Group_1129" data-name="Group 1129" transform="translate(-1356 -4090)">
+    <circle id="Ellipse_17" data-name="Ellipse 17" cx="2.5" cy="2.5" r="2.5" transform="translate(1356 4090)" fill="#bcc3d9"/>
+    <circle id="Ellipse_18" data-name="Ellipse 18" cx="2.5" cy="2.5" r="2.5" transform="translate(1369 4090)" fill="#bcc3d9"/>
+    <circle id="Ellipse_19" data-name="Ellipse 19" cx="2.5" cy="2.5" r="2.5" transform="translate(1369 4103)" fill="#bcc3d9"/>
+    <circle id="Ellipse_20" data-name="Ellipse 20" cx="2.5" cy="2.5" r="2.5" transform="translate(1356 4103)" fill="#bcc3d9"/>
   </g>
 </svg>

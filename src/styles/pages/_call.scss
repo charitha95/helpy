@@ -52,6 +52,7 @@
       animation: ripple 1.5s linear infinite;
       display: flex;
       align-items: center;
+      justify-content: center;
       label {
         margin: 7px 0 0;
         text-align: center;
@@ -59,6 +60,12 @@
         font-size: $font-s-small;
         font-weight: $font-w-medium;
       }
+    }
+  }
+  .duration {
+    p {
+      text-align: center;
+      margin-top: 50px;
     }
   }
 

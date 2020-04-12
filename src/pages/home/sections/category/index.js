@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import relationship from '../../../../assets/imgs/taxi-searching.png';
 import health from '../../../../assets/imgs/taxi-5.png';
 import career from '../../../../assets/imgs/taxi-teamwork-in-office.png';
@@ -9,106 +9,147 @@ import finantial from '../../../../assets/imgs/payment-processed-4.png';
 import gender from '../../../../assets/imgs/taxi-no-connection.png';
 import Zoom from 'react-reveal/Zoom';
 import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { db, auth } from '../../../../services/firebase';
 
-const Category = () => {
-  return (
-    <div className='category-page'>
+class Category extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      requests: {}
+    }
+  }
+
+  componentDidMount() {
+    db.ref("requests").on("value", snapshot => {
+      const reqs = {};
+      snapshot.forEach(snap => { reqs[snap.key] = Number(snap.val()) });
+      this.setState({
+        requests: reqs
+      })
+    });
+  }
+
+  handleClick(value) {
+    this.openCallConnection(value);
+  }
+
+  async openCallConnection(value) {
+    //get available calls and update with new connection
+    db.ref(`calls/${value}/available`).once("value", snapshot => {
+      let availableCalls = snapshot.val();
+
+      // check for the first time
+      if (!availableCalls) {
+        availableCalls = [];
+      }
+
+      //push new call connection
+      availableCalls.unshift({
+        user_id: auth().currentUser.uid,
+        provider_id: '',
+        isStarted: false,
+        isEnded: false
+      });
+
+      //save with new connection
+      db.ref(`calls/${value}/available`).set(availableCalls);
+
+      //update requests list
+      this.updateRequests(value).then(() => {
+        this.props.history.push(`/call?type=${value}`);
+      });
+    });
+  }
+
+  updateRequests(value) {
+    const reqs = { ...this.state.requests }
+    const currentOpennings = reqs[value];
+    return db.ref(`requests/${value}`).set(currentOpennings + 1)
+  }
+
+  render() {
+    return <div className='category-page'>
       <section className='title'>
-        <h3>Hello Dinu!</h3>
+        <h3>Hello {this.props.user.display_name}!</h3>
         <p>How can we help you?</p>
       </section>
       <section className='components'>
         <Zoom cascade>
           <Row>
             <Col>
-              <Link to={'/call?type=relationship'}>
-                <div className='component'>
-                  <figure>
-                    <img src={relationship} alt='component' />
-                  </figure>
-                  <label>Relationship</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('relationship')}>
+                <figure>
+                  <img src={relationship} alt='component' />
+                </figure>
+                <label>Relationship</label>
+              </div>
             </Col>
             <Col>
-              <Link to={'/call?type=health'}>
-                <div className='component'>
-                  <figure>
-                    <img src={health} alt='component' />
-                  </figure>
-                  <label>Health Issues</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('health')}>
+                <figure>
+                  <img src={health} alt='component' />
+                </figure>
+                <label>Health Issues</label>
+              </div>
             </Col>
           </Row>
 
           <Row>
             <Col>
-              <Link to={'/call?type=career'}>
-                <div className='component'>
-                  <figure>
-                    <img src={career} alt='component' />
-                  </figure>
-                  <label>Career</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('career')}>
+                <figure>
+                  <img src={career} alt='component' />
+                </figure>
+                <label>Career</label>
+              </div>
             </Col>
             <Col>
-              <Link to={'/call?type=family'}>
-                <div className='component'>
-                  <figure>
-                    <img src={family} alt='component' />
-                  </figure>
-                  <label>Family</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('family')}>
+                <figure>
+                  <img src={family} alt='component' />
+                </figure>
+                <label>Family</label>
+              </div>
             </Col>
           </Row>
 
           <Row>
             <Col>
-              <Link to={'/call?type=interpersonal'}>
-                <div className='component'>
-                  <figure>
-                    <img src={interpersonal} alt='component' />
-                  </figure>
-                  <label>Interpersonal</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('interpersonal')}>
+                <figure>
+                  <img src={interpersonal} alt='component' />
+                </figure>
+                <label>Interpersonal</label>
+              </div>
             </Col>
             <Col>
-              <Link to={'/call?type=parenting'}>
-                <div className='component'>
-                  <figure>
-                    <img src={parenting} alt='component' />
-                  </figure>
-                  <label>Parenting</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('parenting')}>
+                <figure>
+                  <img src={parenting} alt='component' />
+                </figure>
+                <label>Parenting</label>
+              </div>
             </Col>
           </Row>
 
           <Row>
             <Col>
-              <Link to={'/call?type=finantial'}>
-                <div className='component'>
-                  <figure>
-                    <img src={finantial} alt='component' />
-                  </figure>
-                  <label>Finantial</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('finantial')}>
+                <figure>
+                  <img src={finantial} alt='component' />
+                </figure>
+                <label>Finantial</label>
+              </div>
             </Col>
             <Col>
-              <Link to={'/call?type=gender'}>
-                <div className='component'>
-                  <figure>
-                    <img src={gender} alt='component' />
-                  </figure>
-                  <label>Gender Identity</label>
-                </div>
-              </Link>
+              <div className='component' onClick={() => this.handleClick('relationship')}>
+                <figure>
+                  <img src={gender} alt='component' />
+                </figure>
+                <label>Gender Identity</label>
+              </div>
             </Col>
           </Row>
 
@@ -116,7 +157,7 @@ const Category = () => {
 
       </section>
     </div>
-  )
+  }
 }
 
-export default Category;
+export default withRouter(Category);

@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { ReactComponent as HomeIcon } from '../../assets/svg/home.svg';
-import { ReactComponent as ListIcon } from '../../assets/svg/conv.svg';
 import { ReactComponent as UserIcon } from '../../assets/svg/user.svg';
-import { ReactComponent as FeedIcon } from '../../assets/svg/feed.svg';
 import { Tabs, Tab } from 'react-bootstrap';
-import { Activity, Category } from './sections'
+import { Category } from './sections'
 import { signOut } from '../../helpers/auth';
 import { withRouter } from 'react-router-dom';
 import { auth, db } from '../../services/firebase';
-import Feed from './sections/feed';
 
-function Home({ history }) {
-
+function HomeProvider({ history }) {
   const [user, setUser] = useState('');
 
-  localStorage.setItem('isProvider', false);
+  localStorage.setItem('isProvider', true);
 
   useEffect(() => {
-    // get all users
-    db.ref(`users/${auth().currentUser.uid}`).on('value',
+    // get all providers
+    db.ref(`listeners/${auth().currentUser.uid}`).on('value',
       snap => setUser(snap.val()));
   }, []);
 
@@ -43,20 +39,17 @@ function Home({ history }) {
         <Tab eventKey="home" title={<HomeIcon />}>
           <Category user={user} />
         </Tab>
-        <Tab eventKey="feed" title={<FeedIcon />}>
-          <Feed user={user}/>
-        </Tab>
-        <Tab eventKey="activity" title={<ListIcon />}>
-          <Activity user={user}/>
-        </Tab>
+        {/* <Tab eventKey="activity" title={<ListIcon />}>
+          <Activity />
+        </Tab> */}
         <Tab eventKey="contact" title={<UserIcon />}>
-          {/* <button onClick={(e) => logout(e)}>log out</button>
+          <button onClick={(e) => logout(e)}>log out</button>
           <button onClick={() => goTo('/emergency-contact')}>go to emergancy</button>
-          <button onClick={() => loadUser()}>load user</button> */}
+          <button onClick={() => loadUser()}>load user</button>
         </Tab>
       </Tabs>
     </div>
   )
 }
 
-export default withRouter(Home);
+export default withRouter(HomeProvider);

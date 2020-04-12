@@ -1,28 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="58" height="69" viewBox="0 0 58 69">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20">
   <defs>
     <style>
-      .cls-1, .cls-3 {
-        fill: none;
-      }
-
       .cls-1 {
+        fill: #fff;
         stroke: #bcc3d9;
-        stroke-width: 4px;
+        stroke-width: 1.5px;
       }
 
       .cls-2 {
         stroke: none;
       }
+
+      .cls-3 {
+        fill: none;
+      }
     </style>
   </defs>
-  <g id="Group_100" data-name="Group 100" transform="translate(-1214 -859)">
-    <g id="Ellipse_33" data-name="Ellipse 33" class="cls-1" transform="translate(1227 859)">
-      <circle class="cls-2" cx="16.5" cy="16.5" r="16.5"/>
-      <circle class="cls-3" cx="16.5" cy="16.5" r="14.5"/>
+  <g id="Group_1130" data-name="Group 1130" transform="translate(-1626 -4087)">
+    <g id="Ellipse_25" data-name="Ellipse 25" class="cls-1" transform="translate(1629 4087)">
+      <circle class="cls-2" cx="4.5" cy="4.5" r="4.5"/>
+      <circle class="cls-3" cx="4.5" cy="4.5" r="3.75"/>
     </g>
-    <g id="Rectangle_43" data-name="Rectangle 43" class="cls-1" transform="translate(1214 895)">
-      <rect class="cls-2" width="58" height="33" rx="14"/>
-      <rect class="cls-3" x="2" y="2" width="54" height="29" rx="12"/>
+    <g id="Rectangle_23" data-name="Rectangle 23" class="cls-1" transform="translate(1626 4098)">
+      <rect class="cls-2" width="16" height="9" rx="4"/>
+      <rect class="cls-3" x="0.75" y="0.75" width="14.5" height="7.5" rx="3.25"/>
     </g>
   </g>
 </svg>

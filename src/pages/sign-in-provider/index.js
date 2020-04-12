@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { signIn } from '../../helpers/auth';
 import { Link } from 'react-router-dom';
 // signOut
-class Signin extends Component {
+class SigninProvider extends Component {
 
   constructor() {
     super();
@@ -45,7 +45,7 @@ class Signin extends Component {
             <img src={signin} alt='signin' />
           </figure>
           <section className='signin-container'>
-            <h3>Sign in</h3>
+            <h3>Sign in</h3><span>(provider)</span>
             <Form onSubmit={(e) => this.handleSubmit(e)}>
               <Form.Group controlId="formGroupEmail">
                 <Form.Label>User name </Form.Label>
@@ -59,7 +59,7 @@ class Signin extends Component {
             </Form>
             <p>Don't have an account?</p>
             <p>
-              <Link to='/signup'>
+              <Link to='/signup-provider'>
                 <span>signup</span>
               </Link>
             </p>
@@ -70,4 +70,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+export default SigninProvider;

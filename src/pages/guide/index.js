@@ -52,10 +52,10 @@ function Guide() {
           </Carousel>
         </div>
         <div className='actions'>
-          <Link to='/welcome'>
+          <Link to='/welcome?type=get'>
             <Button variant="secondary">Get Help</Button>
           </Link>
-          <Link to='/welcome'>
+          <Link to='/welcome?type=give'>
             <Button variant="secondary">Give Help</Button>
           </Link>
         </div>

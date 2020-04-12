@@ -1,4 +1,4 @@
-.signup-page {
+.user-note-page {
   position: relative;
   display: flex;
   align-items: center;
@@ -17,37 +17,29 @@
     }
   }
 
-  .signup-container {
+  .user-note-container {
     background: white;
     border-radius: 12px;
     width: 100%;
     padding: 25px 35px;
     margin-top: 70px;
-    .custom-control {
-      margin-top: 10px;
-      margin-left: 10px;
-      padding-bottom: 5px;
-      padding-top: 5px;
-      label {
-        text-transform: capitalize;
-        margin: 0;
-        &::before {
-          top: 0 !important;
-        }
-        &::after {
-          top: 0 !important;
-        }
-      }
-    }
     h3 {
       text-transform: uppercase;
       text-align: center;
       padding: 0 25px;
       margin: 30px 0;
     }
+    > p {
+      margin-bottom: 15px;
+    }
     button {
       width: 100%;
       margin: 25px 0;
+    }
+    form {
+      label {
+        margin-bottom: 5px;
+      }
     }
     p {
       text-align: center;

@@ -8,7 +8,7 @@ import interpersonal from '../../assets/imgs/taxi-coffee-break.png';
 import parenting from '../../assets/imgs/downloading-5.png';
 import finantial from '../../assets/imgs/payment-processed-4.png';
 import gender from '../../assets/imgs/taxi-no-connection.png';
-// import ReactStopwatch from 'react-stopwatch';
+import Timer from 'react-compound-timer'
 import queryString from 'query-string';
 
 import { Link, withRouter } from 'react-router-dom';
@@ -39,21 +39,16 @@ const Call = ({ location, history }) => {
   const handleModal = () => setShow(!show);
 
   function getAndUpdateAvailableCalls() {
+    const startedTime = Date.now()
     db.ref(`calls/${qString.type}/available/0`).on("value", async snapshot => {
       if (localStorage.getItem('isProvider') === 'true') {
-        await db.ref(`calls/${qString.type}/available/0`).set({
-          user_id: snapshot.val().user_id,
-          provider_id: auth().currentUser.uid,
-          isStarted: true,
-          isEnded: snapshot.val().isEnded,
-          provider_rating: snapshot.val().provider_rating || '',
-          provider_note: snapshot.val().provider_note || '',
-          user_rating: snapshot.val().user_rating || '',
-          duration: snapshot.val().duration || '',
-          time: snapshot.val().time || '',
-          type: qString.type || '',
-          date: formatted_date || '',
-        });
+        const upCall = { ...snapshot.val() }
+        upCall.provider_id = auth().currentUser.uid;
+        upCall.isStarted = true;
+        upCall.type = qString.type;
+        upCall.date = formatted_date;
+        upCall.startedTime = startedTime;
+        await db.ref(`calls/${qString.type}/available/0`).set({ ...upCall });
       }
       setSelectedCall(snapshot.val());
     });
@@ -109,6 +104,7 @@ const Call = ({ location, history }) => {
     }
 
 
+
     db.ref(`calls/${qString.type}/available/0`).set({ ...callMeta }).then(() => {
       history.push(route);
     });
@@ -117,11 +113,17 @@ const Call = ({ location, history }) => {
   function callEndHandler() {
     db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
       const newCall = { ...selectedCall };
-      newCall.duration = '';
+      newCall.isEnded = true
+      newCall.endedTime = Date.now();
+
+      const differenceDate = new Date(newCall.endedTime - newCall.startedTime);
+      newCall.duration = differenceDate.getUTCHours() + ':' + differenceDate.getUTCMinutes() + ':' + differenceDate.getUTCSeconds()
+      console.log(newCall.duration);
+
       const h = (current_datetime.getHours() < 10 ? '0' : '') + current_datetime.getHours(),
         m = (current_datetime.getMinutes() < 10 ? '0' : '') + current_datetime.getMinutes();
       newCall.time = `${h}:${m}`
-      newCall.isEnded = true
+
       db.ref(`calls/${qString.type}/available/0`).set({ ...newCall }).then(() => {
         setSelectedCall({ ...newCall });
       });
@@ -166,13 +168,21 @@ const Call = ({ location, history }) => {
         </section>
         <section className='counter' style={{ display: selectedCall.isEnded || !selectedCall.isStarted ? 'none' : 'flex' }}>
           <div className="circle-ripple">
-            <p>0:001</p>
+            {selectedCall.isStarted
+              &&
+              <Timer>
+                <Timer.Hours />:
+              <Timer.Minutes />:
+              <Timer.Seconds />
+              </Timer>
+            }
+
           </div>
         </section>
 
         {selectedCall.isEnded &&
           <div className='duration'>
-            <p>Call duration:<span> 05:02 minutes</span></p>
+            <p>Call duration:<span> {selectedCall.duration}</span></p>
           </div>
         }
 

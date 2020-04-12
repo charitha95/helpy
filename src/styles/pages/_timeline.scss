@@ -79,7 +79,6 @@
         font-size: $font-s-regular !important;
       }
       p {
-        margin: 10px 0 0;
         padding: 0;
         color: rgba($text-toned-color, 1);
       }
@@ -91,10 +90,18 @@
       }
     }
   }
+  .content {
+    padding-bottom: 20px;
+    font-family: "Roboto" !important;
+    span {
+      color: rgba($text-toned-color, 1);
+    }
+    h3, p {
+      margin-bottom: 5px;
+    }
+  }
 }
-.content {
-  padding-bottom: 20px;
-}
+
 @media (max-width: 767px) {
   .timeline-page {
     width: 100%;
@@ -142,8 +149,6 @@
     text-align: center;
   }
   .clear-both {
-    clear:both;
+    clear: both;
   }
 }
-
-

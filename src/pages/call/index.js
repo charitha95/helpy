@@ -111,7 +111,6 @@ const Call = ({ location, history }) => {
   }
 
   function updateUserCalls(call, path) {
-    debugger
     return db.ref(path).once("value", snapshot => {
       let calls = snapshot.val();
 

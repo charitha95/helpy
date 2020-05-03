@@ -23,7 +23,7 @@
       color: $text-default-color;
       &.active {
         background-color: $primary-dark-color;
-        font-weight: $badge-font-weight;
+        font-weight: 600;
       }
     }
     .nav-tabs {

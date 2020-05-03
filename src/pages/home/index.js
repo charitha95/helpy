@@ -8,7 +8,8 @@ import { Activity, Category } from './sections'
 import { withRouter } from 'react-router-dom';
 import { auth, db } from '../../services/firebase';
 import Feed from './sections/feed';
-import { signOut } from '../../helpers/auth';
+// import { signOut } from '../../helpers/auth';
+import Profile from './sections/profile';
 
 function Home({ history }) {
 
@@ -22,26 +23,26 @@ function Home({ history }) {
       snap => setUser(snap.val()));
   }, []);
 
-  const logout = (e) => {
-    e.preventDefault();
-    signOut();
-  }
+  // const logout = (e) => {
+  //   e.preventDefault();
+  //   signOut();
+  // }
 
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
-      <Tabs defaultActiveKey="home">
+      <Tabs className='bottom-tabs' defaultActiveKey="home">
         <Tab eventKey="home" title={<HomeIcon />}>
           <Category user={user} />
         </Tab>
         <Tab eventKey="feed" title={<FeedIcon />}>
-          <Feed user={user}/>
+          <Feed user={user} />
         </Tab>
         <Tab eventKey="activity" title={<ListIcon />}>
-          <Activity user={user}/>
+          <Activity user={user} />
         </Tab>
         <Tab eventKey="contact" title={<UserIcon />}>
-          <button onClick={(e) => logout(e)}>log out</button>
+          <Profile  user={user}/>
         </Tab>
       </Tabs>
     </div>

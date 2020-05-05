@@ -48,6 +48,7 @@ const Call = ({ location, history }) => {
         upCall.type = qString.type;
         upCall.date = formatted_date;
         upCall.startedTime = startedTime;
+        upCall.providerName = qString.username;
         await db.ref(`calls/${qString.type}/available/0`).set({ ...upCall });
       }
       setSelectedCall(snapshot.val());
@@ -178,7 +179,7 @@ const Call = ({ location, history }) => {
             {
               selectedCall &&
                 selectedCall.isEnded ? <p>Call is over! </p> :
-                !selectedCall.isStarted ? <p>connecting to a  {isProvider ? 'user.' : 'provider.'} </p> : <p>Connected to a {isProvider ? 'user.' : 'provider.'}</p>
+                !selectedCall.isStarted ? <p>connecting to a  {isProvider ? 'user.' : 'provider.'} </p> : <p>Connected to a {isProvider ? 'user.' : `provider: ${selectedCall.providerName}`}</p>
             }
 
           </div>

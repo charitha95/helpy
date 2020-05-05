@@ -17,6 +17,8 @@ import { Button } from 'react-bootstrap';
 import { db, auth } from '../../services/firebase';
 import RatingModal from './sections/rating';
 
+
+
 const Call = ({ location, history }) => {
 
   const [data, setData] = useState({ name: 'Relationship', img: relationship })
@@ -26,15 +28,43 @@ const Call = ({ location, history }) => {
   const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
   const current_datetime = new Date();
   const formatted_date = current_datetime.getDate() + "-" + months[current_datetime.getMonth()] + "-" + current_datetime.getFullYear();
-
   const qString = queryString.parse(location.search);
+
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
 
   useEffect(() => {
     setProvider(localStorage.getItem('isProvider') === 'true');
     getAndUpdateAvailableCalls();
     setPropData();
+    startSpeechToText();
     // eslint-disable-next-line
   }, []);
+
+
+
+
+  const startSpeechToText = () => {
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    const onResult = event => {
+      const result = document.getElementById("result-block");
+      result.innerHTML = "";
+      for (const res of event.results) {
+        const text = document.createTextNode(res[0].transcript);
+        const p = document.createElement("p");
+        if (res.isFinal) {
+          p.classList.add("translatedText");
+        }
+        p.appendChild(text);
+        result.appendChild(p);
+      }
+    };
+    recognition.addEventListener("result", onResult);
+
+    recognition.start();
+  }
 
   const handleModal = () => setShow(!show);
 
@@ -129,14 +159,20 @@ const Call = ({ location, history }) => {
   }
 
   function callEndHandler() {
+    recognition.stop();
+    const nodes = document.getElementsByClassName('translatedText');
+    let voiceText = '';
+    for (let i = 0; i < nodes.length; i++) {
+      voiceText += ` ${nodes[i].innerText}`
+    }
     db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
       const newCall = { ...selectedCall };
       newCall.isEnded = true
       newCall.endedTime = Date.now();
-
+      newCall.voiceText = voiceText;
+      recognition.stop();
       const differenceDate = new Date(newCall.endedTime - newCall.startedTime);
       newCall.duration = differenceDate.getUTCHours() + ':' + differenceDate.getUTCMinutes() + ':' + differenceDate.getUTCSeconds()
-      console.log(newCall.duration);
 
       const h = (current_datetime.getHours() < 10 ? '0' : '') + current_datetime.getHours(),
         m = (current_datetime.getMinutes() < 10 ? '0' : '') + current_datetime.getMinutes();
@@ -181,7 +217,7 @@ const Call = ({ location, history }) => {
                 selectedCall.isEnded ? <p>Call is over! </p> :
                 !selectedCall.isStarted ? <p>connecting to a  {isProvider ? 'user.' : 'provider.'} </p> : <p>Connected to a {isProvider ? 'user.' : `provider: ${selectedCall.providerName}`}</p>
             }
-
+            <div id="result-block"></div>
           </div>
         </section>
         <section className='counter' style={{ display: selectedCall.isEnded || !selectedCall.isStarted ? 'none' : 'flex' }}>

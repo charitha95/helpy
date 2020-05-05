@@ -74,6 +74,15 @@ const Call = ({ location, history }) => {
     const startedTime = Date.now()
     db.ref(`calls/${qString.type}/available/0`).on("value", async snapshot => {
       if (localStorage.getItem('isProvider') === 'true') {
+        db.ref(`users/${snapshot.val().user_id}`).once("value", user => {
+          console.log(user.val().calls)
+          if (user.val().calls) {
+            console.log('voice: ' + user.val().calls[0].voiceText);
+          } else {
+            console.log('note: ' + user.val().user_note);
+          }
+        });
+
         const upCall = { ...snapshot.val() }
         upCall.provider_id = auth().currentUser.uid;
         upCall.isStarted = true;
@@ -139,7 +148,12 @@ const Call = ({ location, history }) => {
 
 
     db.ref(`calls/${qString.type}/available/0`).set({ ...callMeta }).then(() => {
-      history.push(route);
+      if(isProvider) {
+        window.location.reload();
+      }
+      else {
+        history.push(route);
+      }
     });
   }
 

@@ -38,7 +38,9 @@ const Call = ({ location, history }) => {
     setProvider(localStorage.getItem('isProvider') === 'true');
     getAndUpdateAvailableCalls();
     setPropData();
-    startSpeechToText();
+    if (localStorage.getItem('isProvider') !== 'true') {
+      startSpeechToText();
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -217,7 +219,6 @@ const Call = ({ location, history }) => {
                 selectedCall.isEnded ? <p>Call is over! </p> :
                 !selectedCall.isStarted ? <p>connecting to a  {isProvider ? 'user.' : 'provider.'} </p> : <p>Connected to a {isProvider ? 'user.' : `provider: ${selectedCall.providerName}`}</p>
             }
-            <div id="result-block"></div>
           </div>
         </section>
         <section className='counter' style={{ display: selectedCall.isEnded || !selectedCall.isStarted ? 'none' : 'flex' }}>
@@ -240,7 +241,7 @@ const Call = ({ location, history }) => {
           </div>
         }
 
-
+        <div id="result-block"></div>
 
 
         <section className='footer'>

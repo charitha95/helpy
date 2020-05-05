@@ -22,7 +22,7 @@
 
   .type-container {
     display: flex;
-    margin-top: 80px;
+    margin-top: 40px;
     flex-direction: column;
     figure {
       max-width: 200px;
@@ -92,6 +92,11 @@
   }
 }
 
-.result-block {
-  display: none;
+#result-block {
+  margin-top: 115px;
+  max-height: 200px;
+  overflow: auto;
+  color: #868585;
+  font-family: Inconsolata;
+  text-align: center;
 }

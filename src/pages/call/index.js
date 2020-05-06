@@ -54,14 +54,18 @@ const Call = ({ location, history }) => {
   const recognition = new SpeechRecognition();
 
   useEffect(() => {
+    console.log('hit uese effect')
+    console.log(selectedCall)
     setProvider(localStorage.getItem('isProvider') === 'true');
     getAndUpdateAvailableCalls();
     setPropData();
     if (localStorage.getItem('isProvider') !== 'true') {
-      startSpeechToText();
+      if (selectedCall.isStarted) {
+        startSpeechToText();
+      }
     }
     // eslint-disable-next-line
-  }, []);
+  }, [selectedCall.isStarted]);
 
 
 
@@ -222,10 +226,11 @@ const Call = ({ location, history }) => {
     for (let i = 0; i < nodes.length; i++) {
       voiceText += ` ${nodes[i].innerText}`
     }
+    console.log(voiceText);
     // testing
-    voiceText = `Hi, I am feeling really insecure lately and I know it’s dumb but I read comments on other women’s stuff and it’s so 
-    hard to not be jealous and it makes me hate myself. Anyway, here’s an older pic of me!!! Trying to teach myself that 
-    someone else’s beauty doesn’t take away from mine.`;
+    // voiceText = `Hi, I am feeling really insecure lately and I know it’s dumb but I read comments on other women’s stuff and it’s so 
+    // hard to not be jealous and it makes me hate myself. Anyway, here’s an older pic of me!!! Trying to teach myself that 
+    // someone else’s beauty doesn’t take away from mine.`;
     const toneParams = {
       toneInput: { 'text': voiceText },
       contentType: 'application/json',
@@ -332,7 +337,7 @@ const Call = ({ location, history }) => {
           </div>
         }
 
-        <div id="result-block"></div>
+        {selectedCall.isStarted && <div id="result-block">listing..</div>}
 
 
         <section className='footer'>

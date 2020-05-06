@@ -58,7 +58,7 @@ class Profile extends Component {
             case 'joy':
               return score += 10;
             case 'confident':
-              return score += 15;
+              return score *= 1.5;
             case 'analytical':
               return score += 5;
             default:

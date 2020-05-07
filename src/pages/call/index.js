@@ -348,7 +348,7 @@ const Call = ({ location, history }) => {
           </div>
         }
 
-        {/* <div id="result-block">{!selectedCall.isStarted ? 'not yet started' : 'started and listning!'}</div> */}
+        <div id="result-block"></div>
         {/* <div className='retry'>
           <p onClick={startSpeechToText}>Retry</p>
         </div> */}

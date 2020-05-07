@@ -348,10 +348,10 @@ const Call = ({ location, history }) => {
           </div>
         }
 
-        <div id="result-block">{!selectedCall.isStarted ? 'not yet started' : 'started and listning!'}</div>
-        <div className='retry'>
+        {/* <div id="result-block">{!selectedCall.isStarted ? 'not yet started' : 'started and listning!'}</div> */}
+        {/* <div className='retry'>
           <p onClick={startSpeechToText}>Retry</p>
-        </div>
+        </div> */}
 
         <section className='footer'>
           {/* <Link to={isProvider ? '/home-provider' : '/home'}> */}

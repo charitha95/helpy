@@ -44,26 +44,28 @@ class Profile extends Component {
     if (this.state.calls) {
       this.state.calls.forEach(call => {
         let score = 0;
-        call.tonesAfterCall.map(tone => {
-          switch (tone.tone_id) {
-            case 'sadness':
-              return score += -5;
-            case 'fear':
-              return score += -10;
-            case 'anger':
-              return score += -5;
-            case 'tentative':
-              return score += 2;
-            case 'joy':
-              return score += 10;
-            case 'confident':
-              return score *= 1.5;
-            case 'analytical':
-              return score += 5;
-            default:
-              return score;
-          }
-        });
+        if (call.tonesAfterCall) {
+          call.tonesAfterCall.map(tone => {
+            switch (tone.tone_id) {
+              case 'sadness':
+                return score += -5;
+              case 'fear':
+                return score += -10;
+              case 'anger':
+                return score += -5;
+              case 'tentative':
+                return score += 2;
+              case 'joy':
+                return score += 10;
+              case 'confident':
+                return score *= 1.5;
+              case 'analytical':
+                return score += 5;
+              default:
+                return score;
+            }
+          });
+        }
         scoreArr.push(score);
         titleArr.push(call.date.replace('-2020', ''))
       })

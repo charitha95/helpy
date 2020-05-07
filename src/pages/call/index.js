@@ -36,6 +36,7 @@ const Call = ({ location, history }) => {
   const [tones, setTones] = useState([]);
   const [isCall, setIsCall] = useState(false);
   const [canStart, setCanStart] = useState(false);
+  // const [isSpeechStopped, setIsSpeechStopped] = useState(false);
   const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
   const current_datetime = new Date();
   const formatted_date = current_datetime.getDate() + "-" + months[current_datetime.getMonth()] + "-" + current_datetime.getFullYear();
@@ -54,27 +55,20 @@ const Call = ({ location, history }) => {
   const recognition = new SpeechRecognition();
 
   useEffect(() => {
-    console.log('hit uese effect')
-    console.log(selectedCall)
     setProvider(localStorage.getItem('isProvider') === 'true');
     getAndUpdateAvailableCalls();
     setPropData();
     if (localStorage.getItem('isProvider') !== 'true') {
-      if (selectedCall.isStarted) {
-        startSpeechToText();
-      }
+      startSpeechToText();
     }
+    return () => recognition.removeEventListener("result", onResult);
     // eslint-disable-next-line
-  }, [selectedCall.isStarted]);
+  }, []);
 
 
-
-
-  const startSpeechToText = () => {
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    const onResult = event => {
-      const result = document.getElementById("result-block");
+  const onResult = event => {
+    const result = document.getElementById("result-block");
+    if (result) {
       result.innerHTML = "";
       for (const res of event.results) {
         const text = document.createTextNode(res[0].transcript);
@@ -85,11 +79,40 @@ const Call = ({ location, history }) => {
         p.appendChild(text);
         result.appendChild(p);
       }
-    };
-    recognition.addEventListener("result", onResult);
+    }
+  };
 
+  const startSpeechToText = () => {
+    // setIsSpeechStopped(false);
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.addEventListener("result", onResult);
+    console.log('startSpeechToText starting')
     recognition.start();
+    console.log('startSpeechToText started')
   }
+
+  recognition.onspeechstart = function () {
+    console.log('Speech has been detected');
+  }
+
+  recognition.onspeechend = function () {
+    console.log('Speech has stopped being detected');
+  }
+
+  recognition.onstart = function () {
+    console.log('onstart');
+  };
+
+  recognition.onend = function () {
+    console.log('onend');
+    startSpeechToText();
+  };
+
+  recognition.onerror = function (event) {
+    console.log('Error in speech', event);
+    console.log('onerror');
+  };
 
   const handleModal = () => setShow(!show);
 
@@ -111,7 +134,6 @@ const Call = ({ location, history }) => {
 
           toneAnalyzer.tone(toneParams)
             .then(toneAnalysis => {
-              console.log(toneAnalysis.result)
               setTones(toneAnalysis.result.document_tone.tones);
               setCanStart(true);
             })
@@ -226,7 +248,6 @@ const Call = ({ location, history }) => {
     for (let i = 0; i < nodes.length; i++) {
       voiceText += ` ${nodes[i].innerText}`
     }
-    console.log(voiceText);
     // testing
     // voiceText = `Hi, I am feeling really insecure lately and I know it’s dumb but I read comments on other women’s stuff and it’s so 
     // hard to not be jealous and it makes me hate myself. Anyway, here’s an older pic of me!!! Trying to teach myself that 
@@ -263,16 +284,6 @@ const Call = ({ location, history }) => {
       .catch(err => {
         console.log('error:', err);
       });
-
-
-
-    // db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-    //   snapshot.ref.remove();
-    // });
-
-
-    // history.push(`/home-provider`);
-
   }
 
   return (
@@ -337,8 +348,10 @@ const Call = ({ location, history }) => {
           </div>
         }
 
-        {selectedCall.isStarted && <div id="result-block">listing..</div>}
-
+        <div id="result-block">{!selectedCall.isStarted ? 'not yet started' : 'started and listning!'}</div>
+        <div className='retry'>
+          <p onClick={startSpeechToText}>Retry</p>
+        </div>
 
         <section className='footer'>
           {/* <Link to={isProvider ? '/home-provider' : '/home'}> */}

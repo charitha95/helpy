@@ -30,9 +30,6 @@ class Speech extends Component {
     }
 
     handleListen() {
-
-        console.log('listening?', this.state.listening)
-
         if (this.state.listening) {
             recognition.start()
             recognition.onend = () => {

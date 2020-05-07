@@ -14,7 +14,6 @@ class Profile extends Component {
   }
   componentDidMount() {
     db.ref(`users/${auth().currentUser.uid}`).once("value", user => {
-      console.log(user.val())
       if (user.val().calls) {
         this.setState({ calls: user.val().calls }, () => {
           this.getRates();
@@ -65,13 +64,10 @@ class Profile extends Component {
               return score;
           }
         });
-        console.log(score)
         scoreArr.push(score);
         titleArr.push(call.date.replace('-2020', ''))
       })
     }
-    console.log(scoreArr)
-    console.log(titleArr)
   }
 
   render() {

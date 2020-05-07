@@ -24,7 +24,6 @@ function RatingModal({ show, handleModal, onSubmit, isProvider, userId }) {
   useEffect(() => {
     if (userId) {
       db.ref(`users/${userId}/emergancy_contact`).once("value", snapshot => {
-        console.log(snapshot.val());
         setContacts(snapshot.val());
       });
     }

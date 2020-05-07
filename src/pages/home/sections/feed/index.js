@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { storage, db } from '../../../../services/firebase';
-import { ReactComponent as Upload } from '../../../../assets/svg/upload.svg';
+// import { ReactComponent as Upload } from '../../../../assets/svg/upload.svg';
 import { Carousel, Row, Col } from 'react-bootstrap';
 class Feed extends Component {
   constructor() {
@@ -61,7 +61,7 @@ class Feed extends Component {
           </section>
         </div>
         <div className='user-uploads'>
-        <h4>Community uploads</h4>
+        <h4>Admin uploads</h4>
           <Row>
             {this.state.userUploaded && this.state.userUploaded.map((img, index) =>
               <Col xs={6} key={index}>
@@ -73,10 +73,10 @@ class Feed extends Component {
           </Row>
 
         </div>
-        <div className='input-wrapper'>
+        {/* <div className='input-wrapper'>
           <Upload />
           <input type="file" accept="image/*" id="cameraInput" onChange={(e) => this.changeHandler(e)} />
-        </div>
+        </div> */}
       </div >
     )
   }

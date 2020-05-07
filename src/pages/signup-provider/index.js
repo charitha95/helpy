@@ -58,7 +58,6 @@ class SignupProvider extends Component {
       mobile: this.state.userTable.phone,
       proficiency: this.state.userTable.proficiency
     }).then(res => {
-      console.log(res);
     });
   }
 

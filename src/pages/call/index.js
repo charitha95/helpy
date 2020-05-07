@@ -16,6 +16,16 @@ import { ReactComponent as BackIcon } from '../../assets/svg/back.svg'
 import { Button } from 'react-bootstrap';
 import { db, auth } from '../../services/firebase';
 import RatingModal from './sections/rating';
+import toneAnalyzer from '../../helpers/watson';
+import happyIcon from '../../assets/imgs/tones/happy.png';
+import fearIcon from '../../assets/imgs/tones/fear.png';
+import angerIcon from '../../assets/imgs/tones/anger.png';
+import analyticalIcon from '../../assets/imgs/tones/analytical.png';
+import confidentIcon from '../../assets/imgs/tones/confident.png';
+import sadnessIcon from '../../assets/imgs/tones/sadness.png';
+import tentativeIcon from '../../assets/imgs/tones/tentative.png';
+
+
 
 const Call = ({ location, history }) => {
 
@@ -23,22 +33,121 @@ const Call = ({ location, history }) => {
   const [isProvider, setProvider] = useState(false)
   const [selectedCall, setSelectedCall] = useState({});
   const [show, setShow] = useState(false);
+  const [tones, setTones] = useState([]);
+  const [isCall, setIsCall] = useState(false);
+  const [canStart, setCanStart] = useState(false);
+  // const [isSpeechStopped, setIsSpeechStopped] = useState(false);
   const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
   const current_datetime = new Date();
   const formatted_date = current_datetime.getDate() + "-" + months[current_datetime.getMonth()] + "-" + current_datetime.getFullYear();
-
   const qString = queryString.parse(location.search);
+  const images = {
+    joy: happyIcon,
+    fear: fearIcon,
+    analytical: analyticalIcon,
+    confident: confidentIcon,
+    sadness: sadnessIcon,
+    tentative: tentativeIcon,
+    anger: angerIcon
+  }
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
 
   useEffect(() => {
     setProvider(localStorage.getItem('isProvider') === 'true');
     getAndUpdateAvailableCalls();
     setPropData();
+    if (localStorage.getItem('isProvider') !== 'true') {
+      startSpeechToText();
+    }
+    return () => recognition.removeEventListener("result", onResult);
     // eslint-disable-next-line
   }, []);
+
+
+  const onResult = event => {
+    const result = document.getElementById("result-block");
+    if (result) {
+      result.innerHTML = "";
+      for (const res of event.results) {
+        const text = document.createTextNode(res[0].transcript);
+        const p = document.createElement("p");
+        if (res.isFinal) {
+          p.classList.add("translatedText");
+        }
+        p.appendChild(text);
+        result.appendChild(p);
+      }
+    }
+  };
+
+  const startSpeechToText = () => {
+    // setIsSpeechStopped(false);
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.addEventListener("result", onResult);
+    console.log('startSpeechToText starting')
+    recognition.start();
+    console.log('startSpeechToText started')
+  }
+
+  recognition.onspeechstart = function () {
+    console.log('Speech has been detected');
+  }
+
+  recognition.onspeechend = function () {
+    console.log('Speech has stopped being detected');
+  }
+
+  recognition.onstart = function () {
+    console.log('onstart');
+  };
+
+  recognition.onend = function () {
+    console.log('onend');
+    startSpeechToText();
+  };
+
+  recognition.onerror = function (event) {
+    console.log('Error in speech', event);
+    console.log('onerror');
+  };
 
   const handleModal = () => setShow(!show);
 
   function getAndUpdateAvailableCalls() {
+    db.ref(`calls/${qString.type}/available/0`).on("value", async snapshot => {
+      if (localStorage.getItem('isProvider') === 'true') {
+        db.ref(`users/${snapshot.val().user_id}`).once("value", user => {
+          let latesUserThoughts = '';
+          if (user.val().calls) {
+            setIsCall(true)
+            latesUserThoughts = user.val().calls[0].voiceText
+          } else {
+            latesUserThoughts = user.val().user_note;
+          }
+          const toneParams = {
+            toneInput: { 'text': latesUserThoughts },
+            contentType: 'application/json',
+          };
+
+          toneAnalyzer.tone(toneParams)
+            .then(toneAnalysis => {
+              setTones(toneAnalysis.result.document_tone.tones);
+              setCanStart(true);
+            })
+            .catch(err => {
+              console.log('error:', err);
+            });
+        });
+      }
+      setSelectedCall(snapshot.val());
+    });
+
+  }
+
+  const startCallFromProvider = () => {
     const startedTime = Date.now()
     db.ref(`calls/${qString.type}/available/0`).on("value", async snapshot => {
       if (localStorage.getItem('isProvider') === 'true') {
@@ -48,11 +157,11 @@ const Call = ({ location, history }) => {
         upCall.type = qString.type;
         upCall.date = formatted_date;
         upCall.startedTime = startedTime;
+        upCall.providerName = qString.username;
         await db.ref(`calls/${qString.type}/available/0`).set({ ...upCall });
       }
       setSelectedCall(snapshot.val());
     });
-
   }
 
   function setPropData() {
@@ -106,7 +215,12 @@ const Call = ({ location, history }) => {
 
 
     db.ref(`calls/${qString.type}/available/0`).set({ ...callMeta }).then(() => {
-      history.push(route);
+      if (isProvider) {
+        window.location.reload();
+      }
+      else {
+        history.push(route);
+      }
     });
   }
 
@@ -128,31 +242,48 @@ const Call = ({ location, history }) => {
   }
 
   function callEndHandler() {
-    db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-      const newCall = { ...selectedCall };
-      newCall.isEnded = true
-      newCall.endedTime = Date.now();
+    recognition.stop();
+    const nodes = document.getElementsByClassName('translatedText');
+    let voiceText = '';
+    for (let i = 0; i < nodes.length; i++) {
+      voiceText += ` ${nodes[i].innerText}`
+    }
+    // testing
+    // voiceText = `Hi, I am feeling really insecure lately and I know it’s dumb but I read comments on other women’s stuff and it’s so 
+    // hard to not be jealous and it makes me hate myself. Anyway, here’s an older pic of me!!! Trying to teach myself that 
+    // someone else’s beauty doesn’t take away from mine.`;
+    const toneParams = {
+      toneInput: { 'text': voiceText },
+      contentType: 'application/json',
+    };
 
-      const differenceDate = new Date(newCall.endedTime - newCall.startedTime);
-      newCall.duration = differenceDate.getUTCHours() + ':' + differenceDate.getUTCMinutes() + ':' + differenceDate.getUTCSeconds()
-      console.log(newCall.duration);
+    toneAnalyzer.tone(toneParams)
+      .then(toneAnalysis => {
+        const newTones = toneAnalysis.result.document_tone.tones
+        db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
+          const newCall = { ...selectedCall };
+          newCall.isEnded = true
+          newCall.endedTime = Date.now();
+          newCall.voiceText = voiceText;
+          newCall.tonesBeforeCall = tones;
+          newCall.tonesAfterCall = newTones;
+          recognition.stop();
+          const differenceDate = new Date(newCall.endedTime - newCall.startedTime);
+          newCall.duration = differenceDate.getUTCHours() + ':' + differenceDate.getUTCMinutes() + ':' + differenceDate.getUTCSeconds()
 
-      const h = (current_datetime.getHours() < 10 ? '0' : '') + current_datetime.getHours(),
-        m = (current_datetime.getMinutes() < 10 ? '0' : '') + current_datetime.getMinutes();
-      newCall.time = `${h}:${m}`
+          const h = (current_datetime.getHours() < 10 ? '0' : '') + current_datetime.getHours(),
+            m = (current_datetime.getMinutes() < 10 ? '0' : '') + current_datetime.getMinutes();
+          newCall.time = `${h}:${m}`
 
-      db.ref(`calls/${qString.type}/available/0`).set({ ...newCall }).then(() => {
-        setSelectedCall({ ...newCall });
+          db.ref(`calls/${qString.type}/available/0`).set({ ...newCall }).then(() => {
+            setSelectedCall({ ...newCall });
+          });
+        });
+
+      })
+      .catch(err => {
+        console.log('error:', err);
       });
-    });
-
-    // db.ref(`calls/${qString.type}/available/0`).once("value", snapshot => {
-    //   snapshot.ref.remove();
-    // });
-
-
-    // history.push(`/home-provider`);
-
   }
 
   return (
@@ -178,13 +309,12 @@ const Call = ({ location, history }) => {
             {
               selectedCall &&
                 selectedCall.isEnded ? <p>Call is over! </p> :
-                !selectedCall.isStarted ? <p>connecting to a  {isProvider ? 'user.' : 'provider.'} </p> : <p>Connected to a {isProvider ? 'user.' : 'provider.'}</p>
+                !selectedCall.isStarted ? <p>connecting to a  {isProvider ? 'user.' : 'provider.'} </p> : <p>Connected to a {isProvider ? 'user.' : `provider: ${selectedCall.providerName}`}</p>
             }
-
           </div>
         </section>
-        <section className='counter' style={{ display: selectedCall.isEnded || !selectedCall.isStarted ? 'none' : 'flex' }}>
-          <div className="circle-ripple">
+        <section className='counter' style={{ display: selectedCall.isEnded || !selectedCall.isStarted ? 'none' : 'flex', marginTop: isProvider ? '20px' : '130px' }}>
+          <div className={`${isProvider ? '' : 'circle-ripple'}`}>
             {selectedCall.isStarted
               &&
               <Timer>
@@ -193,8 +323,23 @@ const Call = ({ location, history }) => {
                 <Timer.Seconds />
               </Timer>
             }
-
           </div>
+        </section>
+
+        <section className='provider-actions'>
+          {isProvider && <div className='user-tones'>
+            <p>User tones based on {isCall ? 'last call:' : 'user thoughts:'}</p>
+            <div className='pills-wrapper'>
+              {tones && tones.map((tone, indx) => {
+                return <div key={indx} className={`tone-pill ${tone.tone_id}`}>
+                  <img src={images[tone.tone_id]} alt='tone' />
+                  <span>{tone.tone_name} - {tone.score.toFixed(2)}</span>
+                </div>
+              })}
+            </div>
+          </div>}
+          {!selectedCall.isStarted && canStart && <Button variant="primary" onClick={startCallFromProvider}>Start call</Button>}
+
         </section>
 
         {selectedCall.isEnded &&
@@ -203,13 +348,15 @@ const Call = ({ location, history }) => {
           </div>
         }
 
-
-
+        {/* <div id="result-block">{!selectedCall.isStarted ? 'not yet started' : 'started and listning!'}</div> */}
+        {/* <div className='retry'>
+          <p onClick={startSpeechToText}>Retry</p>
+        </div> */}
 
         <section className='footer'>
           {/* <Link to={isProvider ? '/home-provider' : '/home'}> */}
           {!selectedCall.isEnded ?
-            <Button variant="secondary" onClick={callEndHandler}>End call</Button> :
+            selectedCall.isStarted && <Button variant="secondary" onClick={callEndHandler}>End call</Button> :
             <Button variant="secondary" onClick={handleModal}>Rate call</Button>
           }
           {/* </Link> */}

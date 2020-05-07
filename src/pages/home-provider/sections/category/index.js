@@ -42,7 +42,7 @@ class Category extends Component {
             this.props && this.props.user.proficiency && <>
 
               {this.props.user.proficiency.find(i => i === 'relationship') &&
-                <Link to={'/call?type=relationship'} >
+                <Link to={`/call?type=relationship&username=${this.props.user.user_name}`}>
                   <div className={`component help-component ${this.props.user.proficiency.find(i => i === 'relationship') ? 'active' : 'not-active'}`}>
                     <section className='illustration'>
                       <figure>

@@ -40,8 +40,9 @@ h6 {
   font-size: $font-s-medium;
 }
 
-p {
+p, label{
   font-size: $font-s-medium;
+  font-family: Roboto;
 }
 
 pre,

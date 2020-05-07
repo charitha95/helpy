@@ -26,7 +26,7 @@ function HomeProvider({ history }) {
   return (
     <div className='page-padding-x page-padding-y page-wrapper white-background'>
 
-      <Tabs defaultActiveKey="home">
+      <Tabs  className='bottom-tabs' defaultActiveKey="home">
         <Tab eventKey="home" title={<HomeIcon />}>
           <Category user={user} />
         </Tab>

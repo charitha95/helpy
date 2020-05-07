@@ -48,7 +48,6 @@ class Signup extends Component {
       phone,
       birth_day: birthDay
     }).then(res => {
-      console.log(res);
     });
   }
 

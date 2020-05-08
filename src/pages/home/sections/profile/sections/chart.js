@@ -3,10 +3,10 @@ import { Line } from 'react-chartjs-2';
 
 const UserChart = props => {
   const data = {
-    labels: ['april-27', 'april-29', 'april-28', 'may-1', 'may-2'],
+    labels: [...props.dates],
     datasets: [{
       label: 'Happiness',
-      data: [1, 2, 4, 4, 6],
+      data: [...props.values],
       backgroundColor: [
         'rgba(99, 255, 110, 0.2)'
       ],
@@ -16,8 +16,9 @@ const UserChart = props => {
       borderWidth: 1
     }]
   }
+  console.log(props)
 
-
+  
   return <Line data={data} />
 }
 

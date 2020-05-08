@@ -10,3 +10,6 @@ const toneAnalyzer = new ToneAnalyzerV3({
 });
 
 export default toneAnalyzer;
+// have used IBM tone analyzer to get user's mood of the latest user activity such as calls. 
+// Above code is initialize and authenticate the application with given api, so that the helpy app can 
+// make requests to ibm anazlyer and get user tones. 

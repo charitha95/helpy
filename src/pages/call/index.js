@@ -50,9 +50,11 @@ const Call = ({ location, history }) => {
     tentative: tentativeIcon,
     anger: angerIcon
   }
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
+  // in order to record users voice helpy app initilize speech recognition with the help of SpeechRecognition Web API.
+  // above codes creates the recognition object to use it later.
 
   useEffect(() => {
     setProvider(localStorage.getItem('isProvider') === 'true');
@@ -66,6 +68,14 @@ const Call = ({ location, history }) => {
   }, []);
 
 
+
+  const startSpeechToText = () => {
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.addEventListener("result", onResult);
+    recognition.start();
+  }
+  
   const onResult = event => {
     const result = document.getElementById("result-block");
     if (result) {
@@ -81,16 +91,9 @@ const Call = ({ location, history }) => {
       }
     }
   };
-
-  const startSpeechToText = () => {
-    // setIsSpeechStopped(false);
-    recognition.continuous = true;
-    recognition.interimResults = true;
-    recognition.addEventListener("result", onResult);
-    console.log('startSpeechToText starting')
-    recognition.start();
-    console.log('startSpeechToText started')
-  }
+  // after recognition is initiated with speechRecognition web api it allows to start the recording it.
+  // above stated code used to create the event listner on DOM (document object model) and start the recoring. 
+  // Once recording is started user's voice will evalute and will populate according on the user screen.
 
   recognition.onspeechstart = function () {
     console.log('Speech has been detected');
@@ -142,6 +145,9 @@ const Call = ({ location, history }) => {
             });
         });
       }
+      // after successfully aauthenticated with ibm watson next is to use the tone analyzer in the helpy app. 
+      // above piece of code explains how helpy app make requests against IBM tone analyzer to get tones and 
+      // show to listners before he/she starts the call.  
       setSelectedCall(snapshot.val());
     });
 
@@ -249,9 +255,11 @@ const Call = ({ location, history }) => {
       voiceText += ` ${nodes[i].innerText}`
     }
     // testing
-    // voiceText = `Hi, I am feeling really insecure lately and I know it’s dumb but I read comments on other women’s stuff and it’s so 
-    // hard to not be jealous and it makes me hate myself. Anyway, here’s an older pic of me!!! Trying to teach myself that 
-    // someone else’s beauty doesn’t take away from mine.`;
+    voiceText = `Damnnnnn Kim!!! Great job! I’m speechless.  All logo concepts
+     are great and bring a special “it” factor to our business. OMG… concept two
+      gives me goose bumps. Not only have you combined our essence in the logo but you’ve managed to quiet my 
+    skeptic partner as well! We both agree on concept 2. Great bold colors and
+     beautiful simple design. I love it!! Once again you’ve hit it out of the park!`;
     const toneParams = {
       toneInput: { 'text': voiceText },
       contentType: 'application/json',

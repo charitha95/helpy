@@ -10,7 +10,9 @@ import { db, auth } from '../../../../services/firebase';
 
 class Profile extends Component {
   state = {
-    calls: []
+    calls: [],
+    values: [],
+    dates: []
   }
   componentDidMount() {
     db.ref(`users/${auth().currentUser.uid}`).once("value", user => {
@@ -53,23 +55,32 @@ class Profile extends Component {
                 return score += -10;
               case 'anger':
                 return score += -5;
-              case 'tentative':
-                return score += 2;
+              // case 'tentative':
+              //   return score += 0;
               case 'joy':
                 return score += 10;
               case 'confident':
                 return score *= 1.5;
               case 'analytical':
-                return score += 5;
+                return score *= 1.5;
               default:
                 return score;
             }
           });
-        }
-        scoreArr.push(score);
-        titleArr.push(call.date.replace('-2020', ''))
+        } 
+        scoreArr.unshift(score);
+        titleArr.unshift(call.date.replace('-2020', ''))
+        this.setState({dates: [...titleArr], values: [...scoreArr]})
       })
     }
+
+    // based on the previous calls user had with listners, helpy application creates a unique chart to monitor user's progress. 
+    // To create this progress graph helpy application uses a scoring algorithm. 
+    // above code explains the scoring system of the user progress based on the tones user had after each call.
+    // Takes all privous calls and loop through tones and give a scoring to each tone.
+    // there are two flavours in scoring respectively positive or negative. if the user's thoughts/tones on nagative side
+    // it will calculate with negative scorings and if the user's thoughts/tones on positive side it will calculate with positive scoring.
+    // for both flavours is the given call has confident tone in it then it will multiply score by 1.5. 
   }
 
   render() {
@@ -82,7 +93,7 @@ class Profile extends Component {
       <section className='dashboard'>
         <Tabs defaultActiveKey="overall">
           <Tab eventKey="overall" title='Overall'>
-            <UserChart />
+            <UserChart dates={this.state.dates} values={this.state.values}/>
           </Tab>
           <Tab eventKey="feed" title='Stats' >
             <GetTone />

@@ -255,11 +255,11 @@ const Call = ({ location, history }) => {
       voiceText += ` ${nodes[i].innerText}`
     }
     // testing
-    voiceText = `Damnnnnn Kim!!! Great job! I’m speechless.  All logo concepts
-     are great and bring a special “it” factor to our business. OMG… concept two
-      gives me goose bumps. Not only have you combined our essence in the logo but you’ve managed to quiet my 
-    skeptic partner as well! We both agree on concept 2. Great bold colors and
-     beautiful simple design. I love it!! Once again you’ve hit it out of the park!`;
+    // voiceText = `Damnnnnn Kim!!! Great job! I’m speechless.  All logo concepts
+    //  are great and bring a special “it” factor to our business. OMG… concept two
+    //   gives me goose bumps. Not only have you combined our essence in the logo but you’ve managed to quiet my 
+    // skeptic partner as well! We both agree on concept 2. Great bold colors and
+    //  beautiful simple design. I love it!! Once again you’ve hit it out of the park!`;
     const toneParams = {
       toneInput: { 'text': voiceText },
       contentType: 'application/json',
